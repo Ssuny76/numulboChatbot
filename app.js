@@ -308,7 +308,7 @@ function handleGreetingPostback(sender_psid){
   request({
     url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
     qs: {
-      access_token: process.env.PAGE_ACCESS_TOKEN,
+      access_token: PAGE_ACCESS_TOKEN,
       fields: "first_name"
     },
     method: "GET"
