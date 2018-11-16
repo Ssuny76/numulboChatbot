@@ -11,9 +11,9 @@ var db = mongoose.connect(MONGODB_URI);
 // 이것도..?
 var ChatStatus = require("./models/chatstatus");
 
-const greeting = 'GREETING';
+const GREETING = '<GET_STARTED_PAYLOAD>';
 
-const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
+const FACEBOOK_GRAPH_API_BASE_URL = 'a';
 //이 토큰이 포함된 파일을 절대 업로드하거나 github에 적용시키지 마세요.
 const PAGE_ACCESS_TOKEN = 'EAAd7X8SEqH8BAOrCQdZCTrgofOvhQnlW5jWyQf0Jb8EOjj2gdGZCbcZA38FnSPy3zFtXRSdLEG9xCUHVzyOVBoybndBMESi0rH3yfY2rmXRUOfexthFZBrRPDVZBZA0bBdtWUcpRgEPXeKWQ2iXeGsKEiCdBdsrDbNhzNfb8WASwZDZD';
 
