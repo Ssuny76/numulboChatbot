@@ -49,7 +49,11 @@ app.post("/webhook", function(req, res) {
         body.entry.forEach(function(pageEntry) {
             pageEntry.messaging.forEach((messagingEvent) => {
           	console.log({messagingEvent});
-          	if (messagingEvent.postback) {
+
+            handleGreetingPostback(sender_psid);
+
+
+          	/*if (messagingEvent.postback) {
             	handlePostback(messagingEvent.sender.id, messagingEvent.postback);
           	} else if (messagingEvent.message) {
             	if (messagingEvent.message.quick_reply){
@@ -62,7 +66,7 @@ app.post("/webhook", function(req, res) {
               	'Webhook received unknown messagingEvent: ',
               	messagingEvent
             	);
-          	}
+          	}*/
         	});
     	});
 
