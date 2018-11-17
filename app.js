@@ -123,12 +123,6 @@ function receivedPostback(sender_psid, received_postback) {
     default:
       console.log('Cannot differentiate the payload type');
   }
-
-
-    console.log("Received postback for user %d and page %d with payload '%s' " +
-        "at %d", senderID, recipientID, payload, timeOfPostback);
-
-    sendTextMessage(senderID, "Postback called");
 }
 
 function sendTextMessage(recipientId, response) {
