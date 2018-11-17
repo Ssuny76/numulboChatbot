@@ -103,15 +103,13 @@ function receivedPostback(sender_psid, received_postback) {
 
     console.log("RECEIVED POSTBACK IT WORKS");
     var senderID = sender_psid;
-    console.log("senderID가 문제라고!");
 
     switch (payload){
     case START_SEARCH_YES:
-        console.log("스위치");
       var yesmessage = "yes라구요?";
       var yesPayload = {
         "text": yesmessage}
-      //sendTextMessage(senderID, yesPayload);
+      sendTextMessage(senderID, yesPayload);
       console.log("yes라구요CONSOLE");
       break;
     case START_SEARCH_NO:
