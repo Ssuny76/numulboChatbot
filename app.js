@@ -71,12 +71,12 @@ function receivedMessage(event) {
       "text": greetingMessage,
       "quick_replies":[
         {
-          "content_type":"text",
+          "content_type":"postback",
           "title":"Yes!",
           "payload": START_SEARCH_YES
         },
         {
-          "content_type":"text",
+          "content_type":"postback",
           "title":"No, thanks.",
           "payload": START_SEARCH_NO
         }
