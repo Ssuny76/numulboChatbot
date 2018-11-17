@@ -4,7 +4,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
+
 const greeting = 'GREETING';
+const START_SEARCH_NO = 'START_SEARCH_NO';
+const START_SEARCH_YES = 'START_SEARCH_YES';
 
 //작은 따옴표 사이에 본인이 받으신 token을 paste합니다.
 //나중에 보안을 위해서 따로 setting을 하는 방법을 알려드리겠습니다.
@@ -70,16 +73,16 @@ function receivedMessage(event) {
         {
           "content_type":"text",
           "title":"Yes!",
-          //"payload": START_SEARCH_YES
+          "payload": START_SEARCH_YES
         },
         {
           "content_type":"text",
           "title":"No, thanks.",
-          //"payload": START_SEARCH_NO
+          "payload": START_SEARCH_NO
         }
       ]
     };
-    sendTextMessage(senderId, greetingMessage);
+    sendTextMessage(senderId, greetingPayload);
 
 }
 
@@ -104,7 +107,7 @@ function sendTextMessage(recipientId, response) {
         method: 'POST',
         json: {
             recipient: { id: recipientId },
-            message: { text : response }
+            message: { response }
         }
     }, function(error, response, body) {
         if (error) {
