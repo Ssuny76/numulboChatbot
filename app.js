@@ -104,10 +104,7 @@ function receivedPostback(sender_psid, received_postback) {
     console.log("RECEIVED POSTBACK IT WORKS");
     var senderID = sender_psid;
     console.log("senderID가 문제라고!");
-    //var recipientID = received_postback.recipient.id;
-    //var timeOfPostback = received_postback.timestamp;
-
-    //var payload = received_postback.postback.payload;
+    
     switch (payload){
     case START_SEARCH_YES:
         console.log("스위치");
