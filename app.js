@@ -68,7 +68,7 @@ function receivedMessage(event) {
     //var echo_message = "ECHO : " + content;
     var greetingMessage = "누물보에 처음 오셨나요?";
     var greetingPayload = {
-      "text": greetingMessage /*,
+      text: greetingMessage /*,
       "quick_replies":[
         {
           "content_type":"text",
