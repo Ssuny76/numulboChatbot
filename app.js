@@ -46,12 +46,16 @@ app.post("/webhook", function(req, res) {
 
             // Iterate over each messaging event
             pageEntry.messaging.forEach(function(messagingEvent) {
+                console.log("forEach는 들어옴");
                 if (messagingEvent.optin) {
+                    console.log("뭔지모르겠는거에 들어옴 (큰일)");
                     receivedAuthentication(messagingEvent);
                 } else if (messagingEvent.message) {
                     if (messagingEvent.message.quick_reply){
+                      console.log("quick_reply를 인식은함");
                       receivedPostback(messagingEvent);
                     } else{
+                    console.log("message를 인식은함");
                       receivedMessage(messagingEvent);
                     }
                 }else {
