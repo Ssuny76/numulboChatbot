@@ -97,14 +97,14 @@ function receivedPostback(event) {
     sendTextMessage(senderID, "Postback called");
 }
 
-function sendTextMessage(recipientId, message) {
+function sendTextMessage(recipientId, response) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: PAGE_ACCESS_TOKEN },
         method: 'POST',
         json: {
             recipient: { id: recipientId },
-            message: { message }
+            message: { response }
         }
     }, function(error, response, body) {
         if (error) {
