@@ -62,8 +62,24 @@ app.post("/webhook", function(req, res) {
 function receivedMessage(event) {
     var senderId = event.sender.id;
     var content = event.message.text;
-    var echo_message = "ECHO : " + content;
-    sendTextMessage(senderId, echo_message);
+    //var echo_message = "ECHO : " + content;
+    var greetingMessage = "누물보에 처음 오셨나요?";
+    var greetingPayload = {
+      "text": greetingMessage,
+      "quick_replies":[
+        {
+          "content_type":"text",
+          "title":"Yes!",
+          //"payload": START_SEARCH_YES
+        },
+        {
+          "content_type":"text",
+          "title":"No, thanks.",
+          //"payload": START_SEARCH_NO
+        }
+      ]
+    };
+    sendTextMessage(senderId, greetingPayload);
 
 }
 
@@ -88,7 +104,7 @@ function sendTextMessage(recipientId, message) {
         method: 'POST',
         json: {
             recipient: { id: recipientId },
-            message: { text: message }
+            message: { message }
         }
     }, function(error, response, body) {
         if (error) {
