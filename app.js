@@ -58,6 +58,9 @@ app.post("/webhook", function(req, res) {
                     console.log("message를 인식은함");
                       receivedMessage(messagingEvent);
                     }
+                }else if (messagingEvent.postback) {
+                    console.log("postback으로 인식중");
+                    receivedPostback(messagingEvent.sender.id, messagingEvent.message.quick_reply);
                 }else {
                     console.log("Webhook received unknown messagingEvent: ", messagingEvent);
                 }
