@@ -71,12 +71,12 @@ function receivedMessage(event) {
       "text": greetingMessage,
       "quick_replies":[
         {
-          "content_type":"postback",
+          "content_type":"text",
           "title":"Yes!",
           "payload": START_SEARCH_YES
         },
         {
-          "content_type":"postback",
+          "content_type":"text",
           "title":"No, thanks.",
           "payload": START_SEARCH_NO
         }
@@ -90,13 +90,13 @@ function receivedMessage(event) {
 
 
 
-function receivedPostback(received_postback) {
+function receivedPostback(event) {
 
     // Get the payload for the postback
-    const payload = received_postback.payload;
+    const payload = event.postback.payload;
 
     //console.log("RECEIVED POSTBACK IT WORKS");
-    //var senderID = received_postback.sender.id;
+    var senderID = event.sender.id;
     //var recipientID = received_postback.recipient.id;
     //var timeOfPostback = received_postback.timestamp;
 
@@ -105,13 +105,13 @@ function receivedPostback(received_postback) {
     case START_SEARCH_YES:
       var yesmessage = "yes라구요?";
       var yesPayload = {
-      "text": yesmessage}
+        "text": yesmessage}
       sendTextMessage(senderId, yesPayload);
       break;
     case START_SEARCH_NO:
       var nomessage = "no라구요?";
       var noPayload = {
-      "text": yesmessage}
+        "text": yesmessage}
       sendTextMessage(senderId, noPayload);
       break;
     default:
