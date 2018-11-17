@@ -68,7 +68,7 @@ function receivedMessage(event) {
     //var echo_message = "ECHO : " + content;
     var greetingMessage = "누물보에 처음 오셨나요?";
     var greetingPayload = {
-      "text": greetingMessage,
+      "text": greetingMessage /*,
       "quick_replies":[
         {
           "content_type":"text",
@@ -80,7 +80,7 @@ function receivedMessage(event) {
           "title":"No, thanks.",
           "payload": START_SEARCH_NO
         }
-      ]
+      ] */
     };
     sendTextMessage(senderId, greetingPayload);
 
@@ -125,7 +125,7 @@ function sendTextMessage(recipientId, response) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: PAGE_ACCESS_TOKEN },
-        method: 'POST',
+        method: "POST",
         json: {
             recipient: { id: recipientId },
             message: { response }
