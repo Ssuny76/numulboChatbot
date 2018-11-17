@@ -48,10 +48,10 @@ app.post("/webhook", function(req, res) {
             pageEntry.messaging.forEach(function(messagingEvent) {
                 if (messagingEvent.optin) {
                     receivedAuthentication(messagingEvent);
+                } else if (messagingEvent.message.quick_reply) {
+                    receivedPostback(messagingEvent);
                 } else if (messagingEvent.message) {
                     receivedMessage(messagingEvent);
-                } else if (messagingEvent.postback) {
-                    receivedPostback(messagingEvent);
                 } else {
                     console.log("Webhook received unknown messagingEvent: ", messagingEvent);
                 }
