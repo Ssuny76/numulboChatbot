@@ -50,12 +50,9 @@ app.post("/webhook", function(req, res) {
                     receivedAuthentication(messagingEvent);
                 } else if (messagingEvent.message) {
                     if (messagingEvent.message.quick_reply){
-                      sendTextMessage(senderId, {"text" : "quick_reply야"});
                       receivedPostback(messagingEvent);
-                      sendTextMessage(senderId, {"text" : "드루와쓰"});
                     } else{
                       receivedMessage(messagingEvent);
-                      sendTextMessage(senderId, {"text" : "그냥 messagingEvent야"});
                     }
                 }else {
                     console.log("Webhook received unknown messagingEvent: ", messagingEvent);
