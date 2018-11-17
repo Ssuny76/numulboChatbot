@@ -68,7 +68,7 @@ function receivedMessage(event) {
     //var echo_message = "ECHO : " + content;
     var greetingMessage = "누물보에 처음 오셨나요?";
     var greetingPayload = {
-      text: greetingMessage /*,
+      "text": greetingMessage /*,
       "quick_replies":[
         {
           "content_type":"text",
@@ -85,6 +85,10 @@ function receivedMessage(event) {
     sendTextMessage(senderId, greetingPayload);
 
 }
+
+
+
+
 
 function receivedPostback(received_postback) {
 
@@ -128,7 +132,7 @@ function sendTextMessage(recipientId, response) {
         method: "POST",
         json: {
             recipient: { id: recipientId },
-            message: { response }
+            message: { "text" : "누물보.." }
         }
     }, function(error, response, body) {
         if (error) {
