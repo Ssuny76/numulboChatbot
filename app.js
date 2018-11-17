@@ -79,7 +79,7 @@ function receivedMessage(event) {
         }
       ]
     };
-    sendTextMessage(senderId, greetingPayload);
+    sendTextMessage(senderId, greetingMessage);
 
 }
 
@@ -104,7 +104,7 @@ function sendTextMessage(recipientId, response) {
         method: 'POST',
         json: {
             recipient: { id: recipientId },
-            message: { response }
+            message: { text : response }
         }
     }, function(error, response, body) {
         if (error) {
