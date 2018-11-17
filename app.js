@@ -100,8 +100,9 @@ function handleMessage(sender_psid, message) {
 }
 
 function handleGreetingPostback(sender_psid){
-  request({
-    url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
+  /*request({
+    url: `${FACEBOOK_GRAPH_API_BASE_URL}me/messages`,
+    //url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
     qs: {
       access_token: PAGE_ACCESS_TOKEN,
       fields: "first_name"
@@ -115,8 +116,8 @@ function handleGreetingPostback(sender_psid){
       var bodyObj = JSON.parse(body);
       const name = bodyObj.first_name;
       greeting = "Hi " + name + ". ";
-    }
-    const message = greeting + "안녕하세요, 누물보를 이용해보신 적 있나요?";
+    }*/
+    const message = "안녕하세요, 누물보를 이용해보신 적 있나요?";
     const greetingPayload = {
       "text": message,
       "quick_replies":[
@@ -133,7 +134,7 @@ function handleGreetingPostback(sender_psid){
       ]
     };
     callSendAPI(sender_psid, greetingPayload);
-  });
+  //});
 }
 
 function handlePostback(sender_psid, received_postback) {
@@ -193,11 +194,11 @@ function callSendAPI(sender_psid, response) {
 
   // Send the HTTP request to the Messenger Platform
   request({
-    "url": `${FACEBOOK_GRAPH_API_BASE_URL}me/messages`,
-    "qs": { "access_token": PAGE_ACCESS_TOKEN },
-    "method": "POST",
-    "json": request_body
-  }, (err, res, body) => {
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: { access_token: PAGE_ACCESS_TOKEN },
+        method: 'POST',
+        json: request_body
+    }, (err, res, body) => {
     console.log("Message Sent Response body:", body);
     if (err) {
       console.error("Unable to send message:", err);
