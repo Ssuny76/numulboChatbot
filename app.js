@@ -92,7 +92,23 @@ function receivedPostback(event) {
     var recipientID = event.recipient.id;
     var timeOfPostback = event.timestamp;
 
-    var payload = event.postback.payload;
+    //var payload = event.postback.payload;
+    var greetingMessage = "누물보에 처음 오셨나요?";
+    var greetingPayload = {
+      "text": greetingMessage,
+      "quick_replies":[
+        {
+          "content_type":"text",
+          "title":"Yes!",
+          "payload": START_SEARCH_YES
+        },
+        {
+          "content_type":"text",
+          "title":"No, thanks.",
+          "payload": START_SEARCH_NO
+        }
+      ]
+    };
 
     console.log("Received postback for user %d and page %d with payload '%s' " +
         "at %d", senderID, recipientID, payload, timeOfPostback);
