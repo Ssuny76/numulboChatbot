@@ -114,13 +114,13 @@ function receivedPostback(sender_psid, received_postback) {
       var yesmessage = "yes라구요?";
       var yesPayload = {
         "text": yesmessage}
-      sendTextMessage(senderId, yesPayload);
+      sendTextMessage(senderID, yesPayload);
       break;
     case START_SEARCH_NO:
       var nomessage = "no라구요?";
       var noPayload = {
         "text": yesmessage}
-      sendTextMessage(senderId, noPayload);
+      sendTextMessage(senderID, noPayload);
       break;
     default:
       console.log('Cannot differentiate the payload type');
