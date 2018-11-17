@@ -101,14 +101,16 @@ function receivedPostback(sender_psid, received_postback) {
     // Get the payload for the postback
     const payload = received_postback.payload;
 
-    //console.log("RECEIVED POSTBACK IT WORKS");
+    console.log("RECEIVED POSTBACK IT WORKS");
     var senderID = sender_psid;
+    console.log("senderID가 문제라고!");
     //var recipientID = received_postback.recipient.id;
     //var timeOfPostback = received_postback.timestamp;
 
     //var payload = received_postback.postback.payload;
     switch (payload){
     case START_SEARCH_YES:
+        console.log("스위치문");
       var yesmessage = "yes라구요?";
       var yesPayload = {
         "text": yesmessage}
