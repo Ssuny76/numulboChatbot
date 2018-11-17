@@ -132,7 +132,7 @@ function sendTextMessage(recipientId, response) {
         method: "POST",
         json: {
             recipient: { id: recipientId },
-            message: { "text" : "누물보.." }
+            message: response
         }
     }, function(error, response, body) {
         if (error) {
