@@ -110,7 +110,7 @@ function receivedPostback(sender_psid, received_postback) {
     //var payload = received_postback.postback.payload;
     switch (payload){
     case START_SEARCH_YES:
-        console.log("스위치문");
+        console.log("스위치");
       var yesmessage = "yes라구요?";
       var yesPayload = {
         "text": yesmessage}
