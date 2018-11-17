@@ -86,29 +86,34 @@ function receivedMessage(event) {
 
 }
 
-function receivedPostback(event) {
-    console.log("RECEIVED POSTBACK IT WORKS");
-    var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
-    var timeOfPostback = event.timestamp;
+function receivedPostback(received_postback) {
 
-    //var payload = event.postback.payload;
-    var greetingMessage = "누물보에 처음 오셨나요?";
-    var greetingPayload = {
-      "text": greetingMessage,
-      "quick_replies":[
-        {
-          "content_type":"text",
-          "title":"Yes!",
-          "payload": START_SEARCH_YES
-        },
-        {
-          "content_type":"text",
-          "title":"No, thanks.",
-          "payload": START_SEARCH_NO
-        }
-      ]
-    };
+    // Get the payload for the postback
+    const payload = received_postback.payload;
+
+    //console.log("RECEIVED POSTBACK IT WORKS");
+    //var senderID = received_postback.sender.id;
+    //var recipientID = received_postback.recipient.id;
+    //var timeOfPostback = received_postback.timestamp;
+
+    //var payload = received_postback.postback.payload;
+    switch (payload){
+    case START_SEARCH_YES:
+      var yesmessage = "yes라구요?";
+      var yesPayload = {
+      "text": yesmessage}
+      sendTextMessage(senderId, yesPayload);
+      break;
+    case START_SEARCH_NO:
+      var nomessage = "no라구요?";
+      var noPayload = {
+      "text": yesmessage}
+      sendTextMessage(senderId, noPayload);
+      break;
+    default:
+      console.log('Cannot differentiate the payload type');
+  }
+
 
     console.log("Received postback for user %d and page %d with payload '%s' " +
         "at %d", senderID, recipientID, payload, timeOfPostback);
