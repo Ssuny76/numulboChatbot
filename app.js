@@ -1,6 +1,6 @@
 'use strict'
 
-const greeting = '<GET_STARTED_PAYLOAD>';
+const GREETING = '<GET_STARTED_PAYLOAD>';
 const START_SEARCH_NO = 'START_SEARCH_NO';
 const START_SEARCH_YES = 'START_SEARCH_YES';
 
@@ -78,6 +78,7 @@ function handleMessage(sender_psid, message) {
   const locationAttachment = message && message.attachments && message.attachments.find(a => a.type === 'location');
   const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
 
+  /*
   if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
     handleMessageWithLocationCoordinates(sender_psid, coordinates.lat, coordinates.long);
     return;
@@ -91,7 +92,7 @@ function handleMessage(sender_psid, message) {
   } else if (message.nlp && message.nlp.entities && message.nlp.entities.greetings && message.nlp.entities.greetings.find(g => g.confidence > 0.8 && g.value === 'true')){
     handlePostback(sender_psid, {payload: GREETING});
     return;
-  } else {
+  } else*/ {
     //var content = message.text;
     //var echo_message = "ECHO : " + content;
     handleGreetingPostback(sender_psid);
