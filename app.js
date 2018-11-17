@@ -53,7 +53,7 @@ app.post("/webhook", function(req, res) {
                 } else if (messagingEvent.message) {
                     if (messagingEvent.message.quick_reply){
                       console.log("quick_reply를 인식은함");
-                      receivedPostback(messagingEvent);
+                      receivedPostback(messagingEvent.sender.id, messagingEvent.message.quick_reply);
                     } else{
                     console.log("message를 인식은함");
                       receivedMessage(messagingEvent);
@@ -96,13 +96,13 @@ function receivedMessage(event) {
 
 
 
-function receivedPostback(event) {
+function receivedPostback(sender_psid, received_postback) {
 
     // Get the payload for the postback
-    const payload = event.postback.payload;
+    const payload = received_postback.payload;
 
     //console.log("RECEIVED POSTBACK IT WORKS");
-    var senderID = event.sender.id;
+    var senderID = sender_psid;
     //var recipientID = received_postback.recipient.id;
     //var timeOfPostback = received_postback.timestamp;
 
