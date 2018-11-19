@@ -76,48 +76,22 @@ function receivedMessage(event) {
     var content = event.message.text;
     //var echo_message = "ECHO : " + content;
 
-    console.log("일단 receivedMessage");
-
      // check if it is a location message
     console.log('handleMEssage message:', JSON.stringify(event));
-    console.log('handleMEssage message:', JSON.stringify(event.message.attachments));
 
-    if(event.message.attachments){
-    console.log('handleMEssage message:', JSON.stringify(event.message.attachments.find(a => a.type === 'location')));}
-
-/*
-
-    const locationAttachment = event && event.attachments && event.attachments[0].find(a => a.type === 'location');
-    const coordinates = locationAttachment && locationAttachment[0].payload && locationAttachment[0].payload.coordinates;
-
-
+    const locationAttachment = event && event.message.attachments && event.message.attachments.find(a => a.type === 'location');
+    const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
 
     if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
         console.log("location받았");
 
         var locationMessage = coordinates.lat+"latitude"+coordinates.long+"longitude";
         console.log(locationMessage);
-
-        var greetingPayload = {
-          "text": locationMessage,
-          "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"Yes!",
-              "payload": START_SEARCH_YES
-            },
-            {
-              "content_type":"text",
-              "title":"No, thanks.",
-              "payload": START_SEARCH_NO
-            }
-          ] 
-        };  
         //sendTextMessage(senderId, greetingPayload);
         //handleMessageWithLocationCoordinates(sender_psid, coordinates.lat, coordinates.long);
         return;
     }
-    else{*/
+    else{
     var greetingMessage = "누물보에 처음 오셨나요?";
     var greetingPayload = {
       "text": greetingMessage,
