@@ -10,15 +10,18 @@ const START_SEARCH_NO = 'START_SEARCH_NO';
 const START_SEARCH_YES = 'START_SEARCH_YES';
 
 const mysql = require('mysql2');
+
 const connection = mysql.createConnection({
     host:"mysql.cm8nmhebfeax.ap-northeast-2.rds.amazonaws.com",
-    //port:3306,
+    port:3306,
     database:"mysql",
     user:"robotronic",
     password:"12341234"
 });
 
-
+connection.on('error',function(err){
+    console.log('에러ㄸ씁니다');
+});
 
 //작은 따옴표 사이에 본인이 받으신 token을 paste합니다.
 //나중에 보안을 위해서 따로 setting을 하는 방법을 알려드리겠습니다.
