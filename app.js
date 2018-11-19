@@ -16,7 +16,8 @@ const connection = mysql.createConnection({
     port:3306,
     database:"mysql",
     user:"robotronic",
-    password:"12341234"
+    password:"12341234",
+    connectTimeout: 60000
 });
 
 connection.connect(function(err) {
