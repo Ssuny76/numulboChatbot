@@ -81,7 +81,7 @@ function receivedMessage(event) {
      // check if it is a location message
     console.log('handleMEssage message:', JSON.stringify(event));
 
-    const locationAttachment = event && event.attachments && event.attachments.find(a => a.type === 'location');
+    const locationAttachment = event && event.attachments[0] && event.attachments[0].find(a => a.type === 'location');
     const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
 
     if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
