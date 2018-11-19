@@ -80,10 +80,10 @@ function receivedMessage(event) {
 
      // check if it is a location message
     console.log('handleMEssage message:', JSON.stringify(event));
-    console.log('handleMEssage message:', JSON.stringify(event.attachments));
+    console.log('handleMEssage message:', JSON.stringify(event.message.attachments));
 
-    if(event.attachments){
-    console.log('handleMEssage message:', JSON.stringify(event.attachments[0].find(a => a.type === 'location')));}
+    if(event.message.attachments){
+    console.log('handleMEssage message:', JSON.stringify(event.message.attachments[0].find(a => a.type === 'location')));}
 
 /*
 
