@@ -109,17 +109,18 @@ function receivedPostback(sender_psid, received_postback) {
 
     switch (payload){
     case START_SEARCH_YES:
-      var yesmessage = "yes라구요?";
+      var yesmessage = "제품명을 입력해주세요.";
       var yesPayload = {
-        "text": yesmessage}
+        "text": yesmessage
+    }
       sendTextMessage(senderID, yesPayload);
       console.log("yes라구요CONSOLE");
       break;
     case START_SEARCH_NO:
-      var nomessage = "no라구요?";
+      var nomessage = "제품명을 입력해주시면, 재고가 있는지 알아드립니다.";
       var noPayload = {
-        "text": yesmessage}
-      //sendTextMessage(senderID, noPayload);
+        "text": nomessage}
+      sendTextMessage(senderID, noPayload);
       break;
     default:
       console.log('Cannot differentiate the payload type');
