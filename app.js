@@ -11,11 +11,11 @@ const START_SEARCH_YES = 'START_SEARCH_YES';
 
 const mysql = require('mysql2');
 const connection = mysql.createConnection({
-    host="mysql.cm8nmhebfeax.ap-northeast-2.rds.amazonaws.com",
-    port=3306,
-    dbname="mysql",
-    user="robotronic",
-    password="12341234"
+    host:"mysql.cm8nmhebfeax.ap-northeast-2.rds.amazonaws.com",
+    port:"3306",
+    dbname:"mysql",
+    user:"robotronic",
+    password:"12341234"
 });
 
 
