@@ -114,7 +114,7 @@ function receivedPostback(sender_psid, received_postback) {
         "text": yesmessage,
         "quick_replies":[
         {
-          "content_type":"location",
+          "content_type":"location"
         }
       ] 
     }
@@ -127,7 +127,7 @@ function receivedPostback(sender_psid, received_postback) {
         "text": nomessage,
         "quick_replies":[
         {
-          "content_type":"location",
+          "content_type":"location"
         }
     }
       sendTextMessage(senderID, noPayload);
