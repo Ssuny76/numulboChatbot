@@ -19,8 +19,11 @@ const connection = mysql.createConnection({
     password:"12341234"
 });
 
-connection.on('error',function(err){
-    console.log('에러ㄸ씁니');
+connection.connect(function(err) {
+  if (err) {
+    console.error('error connecting: ', err);
+    return;
+  }
 });
 
 //작은 따옴표 사이에 본인이 받으신 token을 paste합니다.
