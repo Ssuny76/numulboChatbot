@@ -110,7 +110,7 @@ function receivedMessage(event) {
     };
     sendTextMessage(senderId, greetingPayload);
     return;
-   // }
+   }
 
 }
 
