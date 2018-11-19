@@ -80,16 +80,23 @@ function receivedMessage(event) {
 
      // check if it is a location message
     console.log('handleMEssage message:', JSON.stringify(event));
+    console.log('handleMEssage message:', JSON.stringify(event.attachments));
+    console.log('handleMEssage message:', JSON.stringify(event.attachments[0].find(a => a.type === 'location')));
+
+
+/*
 
     const locationAttachment = event && event.attachments && event.attachments[0].find(a => a.type === 'location');
     const coordinates = locationAttachment && locationAttachment[0].payload && locationAttachment[0].payload.coordinates;
+
+
 
     if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
         console.log("location받았");
 
         var locationMessage = coordinates.lat+"latitude"+coordinates.long+"longitude";
         console.log(locationMessage);
-/*
+
         var greetingPayload = {
           "text": locationMessage,
           "quick_replies":[
@@ -104,12 +111,12 @@ function receivedMessage(event) {
               "payload": START_SEARCH_NO
             }
           ] 
-        };  */
+        };  
         //sendTextMessage(senderId, greetingPayload);
         //handleMessageWithLocationCoordinates(sender_psid, coordinates.lat, coordinates.long);
         return;
     }
-    else{
+    else{*/
     var greetingMessage = "누물보에 처음 오셨나요?";
     var greetingPayload = {
       "text": greetingMessage,
@@ -128,7 +135,7 @@ function receivedMessage(event) {
     };
     sendTextMessage(senderId, greetingPayload);
     return;
-    }
+   // }
 
 }
 
