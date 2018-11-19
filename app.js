@@ -83,7 +83,7 @@ function receivedMessage(event) {
     console.log('handleMEssage message:', JSON.stringify(event.message.attachments));
 
     if(event.message.attachments){
-    console.log('handleMEssage message:', JSON.stringify(event.message.attachments[0].find(a => a.type === 'location')));}
+    console.log('handleMEssage message:', JSON.stringify(event.message.attachments.find(a => a.type === 'location')));}
 
 /*
 
