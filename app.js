@@ -109,17 +109,27 @@ function receivedPostback(sender_psid, received_postback) {
 
     switch (payload){
     case START_SEARCH_YES:
-      var yesmessage = "제품명을 입력해주세요.";
+      var yesmessage = "누물보는 제품명을 입력해주시면, 재고가 있는지 알아드리는 어플입니다. 현재 위치를 알려주세요!";
       var yesPayload = {
-        "text": yesmessage
+        "text": yesmessage,
+        "quick_replies":[
+        {
+          "content_type":"location",
+        }
+      ] 
     }
       sendTextMessage(senderID, yesPayload);
       console.log("yes라구요CONSOLE");
       break;
     case START_SEARCH_NO:
-      var nomessage = "제품명을 입력해주시면, 재고가 있는지 알아드립니다.";
+      var nomessage = "현재 위치를 알려주세요!";
       var noPayload = {
-        "text": nomessage}
+        "text": nomessage,
+        "quick_replies":[
+        {
+          "content_type":"location",
+        }
+    }
       sendTextMessage(senderID, noPayload);
       break;
     default:
