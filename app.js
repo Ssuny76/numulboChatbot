@@ -20,7 +20,7 @@ const connection = mysql.createConnection({
 });
 
 connection.on('error',function(err){
-    console.log('에러ㄸ씁니다');
+    console.log('에러ㄸ씁니');
 });
 
 //작은 따옴표 사이에 본인이 받으신 token을 paste합니다.
@@ -98,7 +98,7 @@ function receivedMessage(event) {
 
     if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
         connection.query(
-            'SELECT (lng-'+String(coordinates.long)+')*(lng-'+String(cordinates.long)+')+(lat-'+String(coordinates.lat)+')*(lat-'+String(coordinates.lat)+') as distance, lng, lat, id from stores1.convenient_stores201809 order by distance asc limit 50;',
+            'SELECT (lng-'+String(coordinates.long)+')*(lng-'+String(coordinates.long)+')+(lat-'+String(coordinates.lat)+')*(lat-'+String(coordinates.lat)+') as distance, lng, lat, id from stores1.convenient_stores201809 order by distance asc limit 50;',
             function(err, results, fields){
                 console.log(fields);
                 console.log(results);
