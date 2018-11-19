@@ -75,6 +75,36 @@ function receivedMessage(event) {
     var senderId = event.sender.id;
     var content = event.message.text;
     //var echo_message = "ECHO : " + content;
+
+    const locationAttachment = event && event.attachments && event.attachments.find(a => a.type === 'location');
+    const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
+
+    if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
+        console.log("location받았");
+
+        var locationMessage = coordinates.lat+"latitude"+coordinates.long+"longitude";
+        console.log(locationMessage);
+/*
+        var greetingPayload = {
+          "text": locationMessage,
+          "quick_replies":[
+            {
+              "content_type":"text",
+              "title":"Yes!",
+              "payload": START_SEARCH_YES
+            },
+            {
+              "content_type":"text",
+              "title":"No, thanks.",
+              "payload": START_SEARCH_NO
+            }
+          ] 
+        };  */
+        //sendTextMessage(senderId, greetingPayload);
+        //handleMessageWithLocationCoordinates(sender_psid, coordinates.lat, coordinates.long);
+        //return;
+    }
+    else{
     var greetingMessage = "누물보에 처음 오셨나요?";
     var greetingPayload = {
       "text": greetingMessage,
@@ -92,6 +122,7 @@ function receivedMessage(event) {
       ] 
     };
     sendTextMessage(senderId, greetingPayload);
+    }
 
 }
 
