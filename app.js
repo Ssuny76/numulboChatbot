@@ -9,6 +9,17 @@ const greeting = 'GREETING';
 const START_SEARCH_NO = 'START_SEARCH_NO';
 const START_SEARCH_YES = 'START_SEARCH_YES';
 
+const mysql = require('mysql2');
+const connection = mysql.createConnection({
+    host="mysql.cm8nmhebfeax.ap-northeast-2.rds.amazonaws.com"
+    port=3306
+    dbname="mysql"
+    user="robotronic"
+    password="12341234"
+});
+
+
+
 //작은 따옴표 사이에 본인이 받으신 token을 paste합니다.
 //나중에 보안을 위해서 따로 setting을 하는 방법을 알려드리겠습니다.
 //이 토큰이 포함된 파일을 절대 업로드하거나 github에 적용시키지 마세요.
@@ -83,10 +94,15 @@ function receivedMessage(event) {
     const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
 
     if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
-        console.log("location받았");
-
-        var locationMessage = coordinates.lat+"latitude"+coordinates.long+"longitude";
-        console.log(locationMessage);
+        connection.query(
+            'SELECT (lng-'+String(coordinates.long)+')*(lng-'+String(cordinates.long)+')+(lat-'+String(coordinates.lat)+')*(lat-'+String(coordinates.lat)+') as distance, lng, lat, id from stores1.convenient_stores201809 order by distance asc limit 50;',
+            function(err, results, fields){
+                console.log(fields);
+                console.log(results);
+            }
+        );
+        //var locationMessage = coordinates.lat+"latitude"+coordinates.long+"longitude";
+        
         //sendTextMessage(senderId, greetingPayload);
         //handleMessageWithLocationCoordinates(sender_psid, coordinates.lat, coordinates.long);
         return;
