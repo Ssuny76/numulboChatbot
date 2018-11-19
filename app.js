@@ -76,6 +76,11 @@ function receivedMessage(event) {
     var content = event.message.text;
     //var echo_message = "ECHO : " + content;
 
+    console.log("일단 receivedMessage");
+
+     // check if it is a location message
+    console.log('handleMEssage message:', JSON.stringify(message));
+
     const locationAttachment = event && event.attachments && event.attachments.find(a => a.type === 'location');
     const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
 
@@ -102,7 +107,7 @@ function receivedMessage(event) {
         };  */
         //sendTextMessage(senderId, greetingPayload);
         //handleMessageWithLocationCoordinates(sender_psid, coordinates.lat, coordinates.long);
-        //return;
+        return;
     }
     else{
     var greetingMessage = "누물보에 처음 오셨나요?";
@@ -122,6 +127,7 @@ function receivedMessage(event) {
       ] 
     };
     sendTextMessage(senderId, greetingPayload);
+    return;
     }
 
 }
