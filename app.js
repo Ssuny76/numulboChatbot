@@ -129,6 +129,7 @@ function receivedPostback(sender_psid, received_postback) {
         {
           "content_type":"location"
         }
+        ]
     }
       sendTextMessage(senderID, noPayload);
       break;
