@@ -79,7 +79,7 @@ function receivedMessage(event) {
     console.log("일단 receivedMessage");
 
      // check if it is a location message
-    console.log('handleMEssage message:', JSON.stringify(message));
+    console.log('handleMEssage message:', JSON.stringify(event));
 
     const locationAttachment = event && event.attachments && event.attachments.find(a => a.type === 'location');
     const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
