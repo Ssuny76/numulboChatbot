@@ -256,7 +256,7 @@ function receivedPostback(sender_psid, received_postback) {
     // Get the payload for the postback
     const payload = received_postback.payload;
 
-    console.log("RECEIVED POSTBACK IT WORKS");
+    console.log("RECEIVED POSTBACK IT WORKS :" +payload);
     var senderID = sender_psid;
 
     switch (payload){
