@@ -165,9 +165,7 @@ function productSearchMessage(recipientId, productName){
           "payload": {
             "template_type": "list",
             "top_element_style": "compact",
-            "elements":[{
-
-            }]
+            "elements":[]
           }
         }
       };
@@ -184,8 +182,8 @@ function productSearchMessage(recipientId, productName){
                 }
               ]
         }
-        
-      response.attachment.payload.elements[0].push(realElement);
+
+      response.attachment.payload.elements.push(realElement);
 
 
 
