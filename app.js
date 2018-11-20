@@ -184,11 +184,7 @@ function productSearchMessage(recipientId, productName){
         }
 
       response.attachment.payload.elements.push(realElement);
-
-
-
-
-      console.log(response);
+      console.log(response.attachment.payload.elements[0]);
 
 /*
       const response = {
