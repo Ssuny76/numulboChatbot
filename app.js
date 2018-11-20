@@ -168,7 +168,7 @@ function productSearchMessage(recipientId, productName){
                 {
                   type: "postback",
                   title: "Go Environmental Cleanup",
-                  payload: START_SEARCH_YES
+                  payload: TEMP
                 }
               ]
             }, {
@@ -179,7 +179,7 @@ function productSearchMessage(recipientId, productName){
                 {
                   type: "postback",
                   title: "Go Revegetation",
-                  payload: START_SEARCH_YES
+                  payload: TEMP
                 }
               ]
             }, {
@@ -190,7 +190,7 @@ function productSearchMessage(recipientId, productName){
                 {
                   type: "postback",
                   title: "Go Canvassing",
-                  payload: START_SEARCH_YES
+                  payload: TEMP
                 }
               ]
             }
@@ -235,6 +235,13 @@ function receivedPostback(sender_psid, received_postback) {
         ]
     }
       sendTextMessage(senderID, noPayload);
+      break;
+    case TEMP:
+      var TEMPMESSAGE = "ㅇㅋ";
+      var TEMPPAYLOAD = {
+        "text": TEMPMESSAGE
+    }
+      sendTextMessage(senderID, TEMPPAYLOAD);
       break;
     default:
       console.log('Cannot differentiate the payload type');
