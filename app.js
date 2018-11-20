@@ -60,6 +60,8 @@ app.post("/webhook", function(req, res) {
             var pageID = pageEntry.id;
             var timeOfEvent = pageEntry.time;
 
+            greeting();
+
             // Iterate over each messaging event
             pageEntry.messaging.forEach(function(messagingEvent) {
                 console.log("forEach는 들어옴");
@@ -87,6 +89,28 @@ app.post("/webhook", function(req, res) {
     }
 });
 
+
+function greeting(){
+    var greetingMessage = "누물보에 처음 오셨나요?";
+    var greetingPayload = {
+      "text": greetingMessage,
+      "quick_replies":[
+        {
+          "content_type":"text",
+          "title":"Yes!",
+          "payload": START_SEARCH_YES
+        },
+        {
+          "content_type":"text",
+          "title":"No, thanks.",
+          "payload": START_SEARCH_NO
+        }
+      ] 
+    };
+    sendTextMessage(senderId, greetingPayload);
+    return;
+}
+
 function receivedMessage(event) {
     var senderId = event.sender.id;
     var content = event.message.text;
@@ -104,14 +128,17 @@ function receivedMessage(event) {
             function(err, results, fields){
                 console.log(fields);
                 console.log(results);
-            }
-        );
-        //var locationMessage = coordinates.lat+"latitude"+coordinates.long+"longitude";
-        
-        //sendTextMessage(senderId, greetingPayload);
-        //handleMessageWithLocationCoordinates(sender_psid, coordinates.lat, coordinates.long);
-        return;
-    }
+
+            var productAskMessage = "감사합니다, 찾고자 하는 제품명을 입력해주세요!";
+            var productAskPayload = {
+            "text": productAskMessage
+            };
+            sendTextMessage(senderId, productAskPayload);
+            //productSearchMessage(senderId, productAskPayload);
+        }
+      );
+      return;
+    }/*
     else{
     var greetingMessage = "누물보에 처음 오셨나요?";
     var greetingPayload = {
@@ -131,13 +158,44 @@ function receivedMessage(event) {
     };
     sendTextMessage(senderId, greetingPayload);
     return;
-   }
+   }*/
 
 }
 
 
+/*
+function productSearchMessage(recipientId, response){
+    connection.query(
+            '제품찾는쿼',
+            function(err, results, fields){
+                console.log(fields);
+                console.log(results);
+
+            var productAskMessage = "감사합니다, 찾고자 하는 제품명을 입력해주세요!";
+            var productAskPayload = {
+            "text": productAskMessage
+            };
+            productSearchMessage(senderId, productAskPayload);
+        }
+      );
 
 
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: { access_token: PAGE_ACCESS_TOKEN },
+        method: "POST",
+        json: {
+            recipient: { id: recipientId },
+            message: response
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending message: ' + response.error);
+        }
+    });
+
+}
+*/
 
 function receivedPostback(sender_psid, received_postback) {
 
