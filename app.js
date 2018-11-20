@@ -151,6 +151,8 @@ function productSearchMessage(recipientId, productName){
 
       }
 */
+
+      console.log("productsearch로는 들어옴");
       const response = {
       "attachment": {
         "type": "template",
@@ -196,7 +198,8 @@ function productSearchMessage(recipientId, productName){
         }
       }
     };
-  sendTextMessage(recipientId, response);
+      console.log("response변수저장까지도");
+     sendTextMessage(recipientId, response);
 
 }
 
