@@ -109,7 +109,7 @@ function receivedMessage(event) {
             //productSearchMessage(senderId, productAskPayload);
         }
       )
-    }else if(content.includes("시작")){
+    }else if(content && content.includes("시작")){
       var greetingMessage = "누물보에 처음 오셨나요?";
       var greetingPayload = {
         "text": greetingMessage,
@@ -127,8 +127,10 @@ function receivedMessage(event) {
         ] 
       };
       sendTextMessage(senderId, greetingPayload);
-   }else{
+   }else if(content){
     productSearchMessage(senderId, content);
+  }else{
+    continue;
   }
     return;
 }
