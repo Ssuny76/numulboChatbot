@@ -27,10 +27,6 @@ connection.connect(function(err) {
   }
 });
 
-
-
-//작은 따옴표 사이에 본인이 받으신 token을 paste합니다.
-//나중에 보안을 위해서 따로 setting을 하는 방법을 알려드리겠습니다.
 //이 토큰이 포함된 파일을 절대 업로드하거나 github에 적용시키지 마세요.
 var PAGE_ACCESS_TOKEN = 'EAAd7X8SEqH8BAOrCQdZCTrgofOvhQnlW5jWyQf0Jb8EOjj2gdGZCbcZA38FnSPy3zFtXRSdLEG9xCUHVzyOVBoybndBMESi0rH3yfY2rmXRUOfexthFZBrRPDVZBZA0bBdtWUcpRgEPXeKWQ2iXeGsKEiCdBdsrDbNhzNfb8WASwZDZD';
 
