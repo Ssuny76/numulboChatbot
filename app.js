@@ -8,6 +8,7 @@ const app = express();
 const greeting = 'GREETING';
 const START_SEARCH_NO = 'START_SEARCH_NO';
 const START_SEARCH_YES = 'START_SEARCH_YES';
+const TEMP = 'TEMP';
 
 const mysql = require('mysql2');
 
