@@ -61,7 +61,11 @@ app.post("/webhook", function(req, res) {
             var pageID = pageEntry.id;
             var timeOfEvent = pageEntry.time;
 
+
+            var messagingEvent = pageEntry && pageEntry.messaging;
+
             // Iterate over each messaging event
+            if(messagingEvent)
             pageEntry.messaging.forEach(function(messagingEvent) {
                 console.log("forEach는 들어옴");
                 if (messagingEvent.message) {
@@ -155,7 +159,40 @@ function productSearchMessage(recipientId, productName){
       }
 */
 
-      console.log("productsearch로는 들어옴");
+      var response = {
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "list",
+            "top_element_style": "compact",
+            "elements":[{
+
+            }]
+          }
+        }
+      };
+
+      var realElement =       {
+              "title": "Environmental Cleanup",
+              "subtitle": "Clean environment",
+              "image_url": "http://www.wwf.org.au/Images/UserUploadedImages/416/img-bait-reef-coral-bleaching-rubble-1000px.jpg",
+              "buttons": [
+                {
+                  type: "postback",
+                  title: "Go Environmental Cleanup",
+                  payload: TEMP
+                }
+              ]
+        }
+        
+      response.attachment.payload.elements[0].push(realElement);
+
+
+
+
+      console.log(response);
+
+/*
       const response = {
       "attachment": {
         "type": "template",
@@ -201,7 +238,7 @@ function productSearchMessage(recipientId, productName){
         }
       }
     };
-      console.log("response변수저장까지도");
+    */
      sendTextMessage(recipientId, response);
 
 }
