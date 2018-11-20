@@ -196,7 +196,7 @@ function productSearchMessage(recipientId, productName){
         }
       }
     };
-  sendTextMessage(senderID, response);
+  sendTextMessage(recipientId, response);
 
 }
 
