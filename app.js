@@ -143,7 +143,7 @@ function receivedMessage(event) {
 
 function productSearchMessage(recipientId, productName){
     connection.query(
-        'select name, url from product_example where name like concat('%', ' + String(productName) + ', '%');',
+        'select name, url from product_example where name like concat('%', ' + "\""+String(productName)+"\"" + ', '%');',
         function(err, results, fields){
             console.log("SQL문제업구");
             console.log(productName);
