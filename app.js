@@ -133,7 +133,7 @@ function receivedMessage(event) {
         ] 
       };
       sendTextMessage(senderId, greetingPayload);
-    // 제품명을 입력했을 경
+    // 제품명을 입력했을 경우
    }else if(content){
     productSearchMessage(senderId, content);
   }
@@ -142,14 +142,41 @@ function receivedMessage(event) {
 
 
 function productSearchMessage(recipientId, productName){
-/*    connection.query(
-            '제품찾는쿼리',
-            function(err, results, fields){
-                console.log(fields);
-                console.log(results);
-             }
-    );*/
+    connection.query(
+        'select name, url from product_example where name like concat('%', ' + productName + ', '%');',
+        function(err, results, fields){
+            console.log("SQL문제업구욘");
+            console.log(fields);
+            console.log(results);
+         }
+
+    );
     
+
+
+      var realElement =       {
+          "title": "Environmental Cleanup",
+          "image_url": "http://www.wwf.org.au/Images/UserUploadedImages/416/img-bait-reef-coral-bleaching-rubble-1000px.jpg",
+          "buttons": [
+            {
+              type: "postback",
+              title: "Go Environmental Cleanup",
+              payload: TEMP
+            }
+          ]
+    };
+
+    var anotherElement = {
+          "title": "Revegetation",
+          "image_url": "http://www.wwf.org.au//Images/UserUploadedImages/416/img-planet-globe-on-moss-forest-1000px.jpg",
+          "buttons": [
+            {
+              type: "postback",
+              title: "Go Revegetation",
+              payload: TEMP
+            }
+          ]
+        };
 /*
       response.attachment.payload.elements[0] = [];
       for(var i=0; i<results.length(); i++){
@@ -170,83 +197,13 @@ function productSearchMessage(recipientId, productName){
         }
       };
 
-      var realElement =       {
-              "title": "Environmental Cleanup",
-              "subtitle": "Clean environment",
-              "image_url": "http://www.wwf.org.au/Images/UserUploadedImages/416/img-bait-reef-coral-bleaching-rubble-1000px.jpg",
-              "buttons": [
-                {
-                  type: "postback",
-                  title: "Go Environmental Cleanup",
-                  payload: TEMP
-                }
-              ]
-        };
 
-        var anotherElement = {
-              "title": "Revegetation",
-              "subtitle": "Revegetation",
-              "image_url": "http://www.wwf.org.au//Images/UserUploadedImages/416/img-planet-globe-on-moss-forest-1000px.jpg",
-              "buttons": [
-                {
-                  type: "postback",
-                  title: "Go Revegetation",
-                  payload: TEMP
-                }
-              ]
-            };
 
       response.attachment.payload.elements.push(realElement);
       response.attachment.payload.elements.push(anotherElement);
       console.log(response.attachment.payload.elements[0]);
       console.log(response.attachment.payload.elements[1]);
-/*
-      const response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "list",
-          "top_element_style": "compact",
-          "elements": [
-            {
-              "title": "Environmental Cleanup",
-              "subtitle": "Clean environment",
-              "image_url": "http://www.wwf.org.au/Images/UserUploadedImages/416/img-bait-reef-coral-bleaching-rubble-1000px.jpg",
-              "buttons": [
-                {
-                  type: "postback",
-                  title: "Go Environmental Cleanup",
-                  payload: TEMP
-                }
-              ]
-            }, {
-              "title": "Revegetation",
-              "subtitle": "Revegetation",
-              "image_url": "http://www.wwf.org.au//Images/UserUploadedImages/416/img-planet-globe-on-moss-forest-1000px.jpg",
-              "buttons": [
-                {
-                  type: "postback",
-                  title: "Go Revegetation",
-                  payload: TEMP
-                }
-              ]
-            }, {
-              "title": "Canvassing",
-              "subtitle": "Canvassing",
-              "image_url": "http://www.wwf.org.au/Images/UserUploadedImages/416/img-hackathon-winners-2017-1000px.jpg",
-              "buttons": [
-                {
-                  type: "postback",
-                  title: "Go Canvassing",
-                  payload: TEMP
-                }
-              ]
-            }
-          ]
-        }
-      }
-    };
-    */
+
      sendTextMessage(recipientId, response);
 
 }
