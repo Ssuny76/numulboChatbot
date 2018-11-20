@@ -60,7 +60,7 @@ app.post("/webhook", function(req, res) {
             var pageID = pageEntry.id;
             var timeOfEvent = pageEntry.time;
 
-            greeting();
+            greetingMessage(recipientId, response);
 
             // Iterate over each messaging event
             pageEntry.messaging.forEach(function(messagingEvent) {
@@ -89,27 +89,38 @@ app.post("/webhook", function(req, res) {
     }
 });
 
-
-function greeting(){
-    var greetingMessage = "누물보에 처음 오셨나요?";
-    var greetingPayload = {
-      "text": greetingMessage,
-      "quick_replies":[
-        {
-          "content_type":"text",
-          "title":"Yes!",
-          "payload": START_SEARCH_YES
-        },
-        {
-          "content_type":"text",
-          "title":"No, thanks.",
-          "payload": START_SEARCH_NO
-        }
-      ] 
-    };
-    sendTextMessage(senderId, greetingPayload);
-    return;
+function greetingMessage(recipientId, response) {
+      var greetingMessage = "누물보에 처음 오셨나요?";
+      var greetingPayload = {
+        "text": greetingMessage,
+        "quick_replies":[
+          {
+            "content_type":"text",
+            "title":"Yes!",
+            "payload": START_SEARCH_YES
+          },
+          {
+            "content_type":"text",
+            "title":"No, thanks.",
+            "payload": START_SEARCH_NO
+          }
+        ] 
+      };
+      request({
+          url: 'https://graph.facebook.com/v2.6/me/messages',
+          qs: { access_token: PAGE_ACCESS_TOKEN },
+          method: "POST",
+          json: {
+              recipient: { id: recipientId },
+              message: response
+          }
+      }, function(error, response, body) {
+          if (error) {
+              console.log('Error sending message: ' + response.error);
+          }
+      });
 }
+
 
 function receivedMessage(event) {
     var senderId = event.sender.id;
