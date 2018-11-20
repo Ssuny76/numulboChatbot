@@ -131,6 +131,7 @@ function receivedMessage(event) {
    }else if(content){
     productSearchMessage(senderId, content);
   }else{
+    sendTextMessage(senderId, TEMP);
   }
     return;
 }
