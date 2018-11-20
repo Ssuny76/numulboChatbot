@@ -79,7 +79,7 @@ app.post("/webhook", function(req, res) {
                 }else if (messagingEvent.postback) {
                     console.log("postback으로 인식중");
                     console.log(messagingEvent.postback);
-                    receivedMessage(messagingEvent);
+                    receivedPostback(messagingEvent.sender.id, messagingEvent);
                 }else {
                     console.log("Webhook received unknown messagingEvent: ", messagingEvent);
                 }
@@ -136,21 +136,19 @@ function receivedMessage(event) {
     // 제품명을 입력했을 경
    }else if(content){
     productSearchMessage(senderId, content);
-  }else{
-    sendTextMessage(senderId, TEMP);
   }
     return;
 }
 
 
 function productSearchMessage(recipientId, productName){
-    connection.query(
+/*    connection.query(
             '제품찾는쿼리',
             function(err, results, fields){
                 console.log(fields);
                 console.log(results);
              }
-    );
+    );*/
     
 /*
       response.attachment.payload.elements[0] = [];
