@@ -96,7 +96,7 @@ function receivedMessage(event) {
     const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
     if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
         connection.query(
-            'SELECT (lng-'+String(coordinates.long)+')*(lng-'+String(coordinates.long)+')+(lat-'+String(coordinates.lat)+')*(lat-'+String(coordinates.lat)+') as distance, lng, lat, id from stores1.convenient_stores201809 order by distance asc limit 50;',
+            'SELECT (lng-'+String(coordinates.long)+')*(lng-'+String(coordinates.long)+')+(lat-'+String(coordinates.lat)+')*(lat-'+String(coordinates.lat)+') as distance, lng, lat, id from stores1.convenient_stores201809_final order by distance asc limit 50;',
             function(err, results, fields){
                 console.log(fields);
                 console.log(results);
