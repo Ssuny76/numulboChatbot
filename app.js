@@ -60,17 +60,12 @@ app.post("/webhook", function(req, res) {
             var pageID = pageEntry.id;
             var timeOfEvent = pageEntry.time;
 
-            greetingMessage(recipientId, response);
-
             // Iterate over each messaging event
             pageEntry.messaging.forEach(function(messagingEvent) {
                 console.log("forEach는 들어옴");
-                if (messagingEvent.optin) {
-                    console.log("뭔지모르겠는거에 들어옴 (큰일)");
-                    receivedAuthentication(messagingEvent);
-                } else if (messagingEvent.message) {
+                if (messagingEvent.message) {
                     if (messagingEvent.message.quick_reply){
-                      console.log("quick_reply를 인식은함");
+                      console.log("quick_reply를 인식함");
                       receivedPostback(messagingEvent.sender.id, messagingEvent.message.quick_reply);
                     } else{
                     console.log("message를 인식은함");
@@ -89,7 +84,32 @@ app.post("/webhook", function(req, res) {
     }
 });
 
-function greetingMessage(recipientId, response) {
+
+function receivedMessage(event) {
+    var senderId = event.sender.id;
+    var content = event.message.text;
+    //var echo_message = "ECHO : " + content;
+
+     // check if it is a location message
+    console.log('handleMEssage message:', JSON.stringify(event));
+    const locationAttachment = event && event.message.attachments && event.message.attachments.find(a => a.type === 'location');
+    const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
+    if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
+        connection.query(
+            'SELECT (lng-'+String(coordinates.long)+')*(lng-'+String(coordinates.long)+')+(lat-'+String(coordinates.lat)+')*(lat-'+String(coordinates.lat)+') as distance, lng, lat, id from stores1.convenient_stores201809 order by distance asc limit 50;',
+            function(err, results, fields){
+                console.log(fields);
+                console.log(results);
+
+            var productAskMessage = "감사합니다, 찾고자 하는 제품명을 입력해주세요!";
+            var productAskPayload = {
+            "text": productAskMessage
+            };
+            sendTextMessage(senderId, productAskPayload);
+            //productSearchMessage(senderId, productAskPayload);
+        }
+      )
+    }else if(content.includes("시작")){
       var greetingMessage = "누물보에 처음 오셨나요?";
       var greetingPayload = {
         "text": greetingMessage,
@@ -106,107 +126,79 @@ function greetingMessage(recipientId, response) {
           }
         ] 
       };
-      request({
-          url: 'https://graph.facebook.com/v2.6/me/messages',
-          qs: { access_token: PAGE_ACCESS_TOKEN },
-          method: "POST",
-          json: {
-              recipient: { id: recipientId },
-              message: response
-          }
-      }, function(error, response, body) {
-          if (error) {
-              console.log('Error sending message: ' + response.error);
-          }
-      });
-}
-
-
-function receivedMessage(event) {
-    var senderId = event.sender.id;
-    var content = event.message.text;
-    //var echo_message = "ECHO : " + content;
-
-     // check if it is a location message
-    console.log('handleMEssage message:', JSON.stringify(event));
-
-    const locationAttachment = event && event.message.attachments && event.message.attachments.find(a => a.type === 'location');
-    const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
-
-    if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
-        connection.query(
-            'SELECT (lng-'+String(coordinates.long)+')*(lng-'+String(coordinates.long)+')+(lat-'+String(coordinates.lat)+')*(lat-'+String(coordinates.lat)+') as distance, lng, lat, id from stores1.convenient_stores201809 order by distance asc limit 50;',
-            function(err, results, fields){
-                console.log(fields);
-                console.log(results);
-
-            var productAskMessage = "감사합니다, 찾고자 하는 제품명을 입력해주세요!";
-            var productAskPayload = {
-            "text": productAskMessage
-            };
-            sendTextMessage(senderId, productAskPayload);
-            //productSearchMessage(senderId, productAskPayload);
-        }
-      );
-      return;
-    }/*
-    else{
-    var greetingMessage = "누물보에 처음 오셨나요?";
-    var greetingPayload = {
-      "text": greetingMessage,
-      "quick_replies":[
-        {
-          "content_type":"text",
-          "title":"Yes!",
-          "payload": START_SEARCH_YES
-        },
-        {
-          "content_type":"text",
-          "title":"No, thanks.",
-          "payload": START_SEARCH_NO
-        }
-      ] 
-    };
-    sendTextMessage(senderId, greetingPayload);
+      sendTextMessage(senderId, greetingPayload);
+   }else{
+    productSearchMessage(senderId, content);
+  }
     return;
-   }*/
-
 }
 
 
-/*
-function productSearchMessage(recipientId, response){
-    connection.query(
-            '제품찾는쿼',
+function productSearchMessage(recipientId, productName){
+/*    connection.query(
+            '제품찾는쿼리',
             function(err, results, fields){
                 console.log(fields);
                 console.log(results);
+             }
+    );
+    */
+/*
+      response.attachment.payload.elements[0] = [];
+      for(var i=0; i<results.length(); i++){
+        response.attachment.payload.elements[0][i].title = 제품명
+        response.attachment.payload.elements[0][i].image_url =
 
-            var productAskMessage = "감사합니다, 찾고자 하는 제품명을 입력해주세요!";
-            var productAskPayload = {
-            "text": productAskMessage
-            };
-            productSearchMessage(senderId, productAskPayload);
+      }
+*/
+      const response = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "list",
+          "top_element_style": "compact",
+          "elements": [
+            {
+              "title": "Environmental Cleanup",
+              "subtitle": "Clean environment",
+              "image_url": "http://www.wwf.org.au/Images/UserUploadedImages/416/img-bait-reef-coral-bleaching-rubble-1000px.jpg",
+              "buttons": [
+                {
+                  type: "postback",
+                  title: "Go Environmental Cleanup",
+                  //payload: PREF_CLEANUP
+                }
+              ]
+            }, {
+              "title": "Revegetation",
+              "subtitle": "Revegetation",
+              "image_url": "http://www.wwf.org.au//Images/UserUploadedImages/416/img-planet-globe-on-moss-forest-1000px.jpg",
+              "buttons": [
+                {
+                  type: "postback",
+                  title: "Go Revegetation",
+                  //payload: PREF_REVEGETATION
+                }
+              ]
+            }, {
+              "title": "Canvassing",
+              "subtitle": "Canvassing",
+              "image_url": "http://www.wwf.org.au/Images/UserUploadedImages/416/img-hackathon-winners-2017-1000px.jpg",
+              "buttons": [
+                {
+                  type: "postback",
+                  title: "Go Canvassing",
+                  //payload: PREF_CANVASSING
+                }
+              ]
+            }
+          ]
         }
-      );
-
-
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: PAGE_ACCESS_TOKEN },
-        method: "POST",
-        json: {
-            recipient: { id: recipientId },
-            message: response
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending message: ' + response.error);
-        }
-    });
+      }
+    };
+  sendTextMessage(senderID, response);
 
 }
-*/
 
 function receivedPostback(sender_psid, received_postback) {
 
