@@ -168,7 +168,7 @@ function productSearchMessage(recipientId, productName){
                 {
                   type: "postback",
                   title: "Go Environmental Cleanup",
-                  //payload: PREF_CLEANUP
+                  payload: START_SEARCH_YES
                 }
               ]
             }, {
@@ -179,7 +179,7 @@ function productSearchMessage(recipientId, productName){
                 {
                   type: "postback",
                   title: "Go Revegetation",
-                  //payload: PREF_REVEGETATION
+                  payload: START_SEARCH_YES
                 }
               ]
             }, {
@@ -190,7 +190,7 @@ function productSearchMessage(recipientId, productName){
                 {
                   type: "postback",
                   title: "Go Canvassing",
-                  //payload: PREF_CANVASSING
+                  payload: START_SEARCH_YES
                 }
               ]
             }
@@ -223,7 +223,6 @@ function receivedPostback(sender_psid, received_postback) {
       ] 
     }
       sendTextMessage(senderID, yesPayload);
-      console.log("yes라구요CONSOLE");
       break;
     case START_SEARCH_NO:
       var nomessage = "현재 위치를 알려주세요!";
