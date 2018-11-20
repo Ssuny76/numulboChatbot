@@ -78,7 +78,11 @@ app.post("/webhook", function(req, res) {
                     }
                 }else if (messagingEvent.postback) {
                     console.log("postback으로 인식중");
-                    receivedPostback(messagingEvent.sender.id, messagingEvent.message.quick_reply);
+                    if(messagingEvent.message.quick_reply){
+                      receivedPostback(messagingEvent.sender.id, messagingEvent.message.quick_reply);
+                    }else{
+                      receivedMessage(messagingEvent);
+                    }
                 }else {
                     console.log("Webhook received unknown messagingEvent: ", messagingEvent);
                 }
@@ -111,9 +115,9 @@ function receivedMessage(event) {
             "text": productAskMessage
             };
             sendTextMessage(senderId, productAskPayload);
-            //productSearchMessage(senderId, productAskPayload);
         }
       )
+    // 시작하기
     }else if(content && content.includes("시작")){
       var greetingMessage = "누물보에 처음 오셨나요?";
       var greetingPayload = {
@@ -132,6 +136,7 @@ function receivedMessage(event) {
         ] 
       };
       sendTextMessage(senderId, greetingPayload);
+    // 제품명을 입력했을 경
    }else if(content){
     productSearchMessage(senderId, content);
   }else{
@@ -142,14 +147,14 @@ function receivedMessage(event) {
 
 
 function productSearchMessage(recipientId, productName){
-/*    connection.query(
+    connection.query(
             '제품찾는쿼리',
             function(err, results, fields){
                 console.log(fields);
                 console.log(results);
              }
     );
-    */
+    
 /*
       response.attachment.payload.elements[0] = [];
       for(var i=0; i<results.length(); i++){
