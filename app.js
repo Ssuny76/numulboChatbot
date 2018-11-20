@@ -130,7 +130,6 @@ function receivedMessage(event) {
    }else if(content){
     productSearchMessage(senderId, content);
   }else{
-    continue;
   }
     return;
 }
