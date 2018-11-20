@@ -181,11 +181,25 @@ function productSearchMessage(recipientId, productName){
                   payload: TEMP
                 }
               ]
-        }
+        };
+
+        var anotherElement = {
+              "title": "Revegetation",
+              "subtitle": "Revegetation",
+              "image_url": "http://www.wwf.org.au//Images/UserUploadedImages/416/img-planet-globe-on-moss-forest-1000px.jpg",
+              "buttons": [
+                {
+                  type: "postback",
+                  title: "Go Revegetation",
+                  payload: TEMP
+                }
+              ]
+            };
 
       response.attachment.payload.elements.push(realElement);
+      response.attachment.payload.elements.push(anotherElement);
       console.log(response.attachment.payload.elements[0]);
-
+      console.log(response.attachment.payload.elements[1]);
 /*
       const response = {
       "attachment": {
