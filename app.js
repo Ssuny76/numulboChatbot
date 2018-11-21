@@ -143,7 +143,6 @@ function receivedMessage(event) {
 
 function productSearchMessage(recipientId, productName){
      var sqlquery = 'select *, (score/char_length(item_name)) as accuracy from (select *, if((instr(item_name, "불"))=0, 0, 1)+if((instr(item_name, "닭"))=0, 0, 1)+if((instr(item_name, "볶"))=0, 0, 1)+if((instr(item_name, "음"))=0, 0, 1)+if((instr(item_name, "면"))=0, 0, 1) as score from stores1.item_table) as A order by score desc, accuracy desc limit 4;';
-     var resultItem = [];
 
     var getInformationFromDB = function(callback) {
        connection.query(
@@ -154,10 +153,10 @@ function productSearchMessage(recipientId, productName){
         }
      );
      };
-      
+
       getInformationFromDB(function (results) {
         
-          resultItem = results;
+          var resultItem = results;
           var resultLength= results.length;
           //console.log("resultItem"+resultItem);
           console.log(resultItem[0]);
