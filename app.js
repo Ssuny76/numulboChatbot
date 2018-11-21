@@ -142,9 +142,10 @@ function receivedMessage(event) {
 
 
 function productSearchMessage(recipientId, productName){
+    connection.connect();
      var sqlquery = 'select *, (score/char_length(item_name)) as accuracy from (select *, if((instr(item_name, "불"))=0, 0, 1)+if((instr(item_name, "닭"))=0, 0, 1)+if((instr(item_name, "볶"))=0, 0, 1)+if((instr(item_name, "음"))=0, 0, 1)+if((instr(item_name, "면"))=0, 0, 1) as score from item_table) as A order by score desc, accuracy desc limit 4;';
     console.log(sqlquery);
-    connection.query(
+      connection.query(
         sqlquery,
         function(err, results, fields){
             if (err) {
@@ -153,6 +154,7 @@ function productSearchMessage(recipientId, productName){
             console.log("SQL문제업구");
             console.log(fields);
             console.log(results);
+            connection.end();
          }
 
     );
