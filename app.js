@@ -147,6 +147,9 @@ function productSearchMessage(recipientId, productName){
     connection.query(
         sqlquery,
         function(err, results, fields){
+            if (err) {
+                  throw err;
+            }
             console.log("SQL문제업구");
             console.log(fields);
             console.log(results);
@@ -207,6 +210,7 @@ function productSearchMessage(recipientId, productName){
       console.log(response.attachment.payload.elements[1]);
 
      sendTextMessage(recipientId, response);
+     return;
 
 }
 
@@ -253,6 +257,7 @@ function receivedPostback(sender_psid, received_postback) {
     default:
       console.log('Cannot differentiate the payload type');
   }
+  return;
 }
 
 function sendTextMessage(recipientId, response) {
@@ -269,6 +274,7 @@ function sendTextMessage(recipientId, response) {
             console.log('Error sending message: ' + response.error);
         }
     });
+    return;
 }
 
 app.listen(app.get('port'), function() {
