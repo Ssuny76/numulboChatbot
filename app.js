@@ -116,10 +116,10 @@ function receivedMessage(event) {
     if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
 
         const query = {$and: [
-          { 'user_id': sender_psid }
+          { 'user_id': senderId }
         ]};
         const update = {
-          $set: { "location.lat": coordinates_lat, "location.long": coordinates_long}
+          $set: { "location.lat": coordinates.lat, "location.long": coordinates.long}
         };
         const options = {upsert: false, new: true};
 
