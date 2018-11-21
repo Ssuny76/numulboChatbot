@@ -5,9 +5,15 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 
+require('dotenv').config();
+
 const MONGODB_URI = process.env.MONGODB_URI;
+console.log(MONGODB_URI);
 const mongoose = require('mongoose');
 var db = mongoose.connect(MONGODB_URI);
+
+
+
 var ChatStatus = require("./models/chatstatus");
 
 const greeting = 'GREETING';
