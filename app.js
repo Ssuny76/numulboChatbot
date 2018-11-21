@@ -114,7 +114,12 @@ function receivedMessage(event) {
     const locationAttachment = event && event.message.attachments && event.message.attachments.find(a => a.type === 'location');
     const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
     if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
-
+        var productAskMessage = "감사합니다, 찾고자 하는 제품명을 입력해주세요!";
+        var productAskPayload = {
+        "text": productAskMessage
+        };
+        sendTextMessage(senderId, productAskPayload);
+/*
         const query = {$and: [
           { 'user_id': senderId }
         ]};
@@ -134,7 +139,7 @@ function receivedMessage(event) {
             sendTextMessage(senderId, productAskPayload);
           }
         });
-
+*/
 
 /*
         connection.query(
