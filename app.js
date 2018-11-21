@@ -147,6 +147,10 @@ function receivedMessage(event) {
 
 function productSearchMessage(recipientId, productName){
 
+
+
+  // 님들 이거 아이템 하나 딱 뜰때 list처리해줘야함
+
     var input_array = productName.split(' ');
     console.log(input_array);
     var input_concat = productName.replace(' ','');
@@ -225,11 +229,9 @@ function productSearchMessage(recipientId, productName){
 
       getInformationFromDB(function (results) {
           resultItem = results;
-          console.log(resultItem[0]);
-          console.log(resultItem.length);
           for(var i=0; i<resultItem.length; i++){
             tempElements[i].title = resultItem[i].item_name;
-            tempElements[i].buttons[0].image_url = "https://pixabay.com/photo-2736410/";
+            tempElements[i].image_url = "https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2018/11/Untitled-design-1-2-796x417.png";
             tempElements[i].buttons[0].title = resultItem[i].item_name;
             tempElements[i].buttons[0].payload = TEMP;
             response.attachment.payload.elements.push(tempElements[i]);
