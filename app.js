@@ -155,12 +155,12 @@ function productSearchMessage(recipientId, productName){
              resultItem.push(results[i]);
             }
           };
-          callback(null, result);
+          callback(null, resultItem);
         }
      );
      };
       
-      getInformationFromDB(function (err, result) {
+      getInformationFromDB(function (err, resultItem) {
         if(err) console.log("DB Error");
         else console.log(resultItem);
       });
