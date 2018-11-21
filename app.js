@@ -144,6 +144,7 @@ function receivedMessage(event) {
 function productSearchMessage(recipientId, productName){
      var sqlquery = 'select *, (score/char_length(item_name)) as accuracy from (select *, if((instr(item_name, "불"))=0, 0, 1)+if((instr(item_name, "닭"))=0, 0, 1)+if((instr(item_name, "볶"))=0, 0, 1)+if((instr(item_name, "음"))=0, 0, 1)+if((instr(item_name, "면"))=0, 0, 1) as score from stores1.item_table) as A order by score desc, accuracy desc limit 4;';
      var resultItem = [];
+     var resultLength;
 
     var getInformationFromDB = function(callback) {
        connection.query(
@@ -153,6 +154,7 @@ function productSearchMessage(recipientId, productName){
           if(results.length) {
             for(var i = 0; i<results.length; i++) {
              resultItem.push(results[i]);
+             resultLength = results.length;
             }
           };
           callback(null, resultItem);
@@ -189,9 +191,9 @@ function productSearchMessage(recipientId, productName){
       };
 
       console.log(resultItem.length);
-      console.log(Object.keys(resultItem).length);
+      console.log(resultLength);
 
-      for(var i=0; i<Object.keys(resultItem).length; i++){
+      for(var i=0; i<resultLength; i++){
         tempElement.title = resultItem[i].item_name;
         tempElement.image_url = "https://pixabay.com/photo-2736410/";
         tempElement.buttons[0].title = resultItem[i].item_name;
