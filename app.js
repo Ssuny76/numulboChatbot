@@ -8,9 +8,11 @@ const app = express();
 const greeting = 'GREETING';
 const START_SEARCH_NO = 'START_SEARCH_NO';
 const START_SEARCH_YES = 'START_SEARCH_YES';
-const TEMP = 'TEMP';
+const CVSinfo = 'CVSinfo';
 
 const mysql = require('mysql2');
+
+var ChatStatus = require("./models/chatstatus");
 
 const connection = mysql.createConnection({
     host:"mysql.cm8nmhebfeax.ap-northeast-2.rds.amazonaws.com",
@@ -95,6 +97,13 @@ app.post("/webhook", function(req, res) {
 });
 
 
+
+
+
+
+
+
+
 function receivedMessage(event) {
     var senderId = event.sender.id;
     var content = event.message.text;
@@ -105,19 +114,40 @@ function receivedMessage(event) {
     const locationAttachment = event && event.message.attachments && event.message.attachments.find(a => a.type === 'location');
     const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
     if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
-        connection.query(
-            'SELECT (lng-'+String(coordinates.long)+')*(lng-'+String(coordinates.long)+')+(lat-'+String(coordinates.lat)+')*(lat-'+String(coordinates.lat)+') as distance, lng, lat, id from stores1.convenient_stores201809_final order by distance asc limit 50;',
-            function(err, results, fields){
-                console.log(fields);
-                console.log(results);
 
+        const query = {$and: [
+          { 'user_id': sender_psid }
+        ]};
+        const update = {
+          $set: { "location.lat": coordinates_lat, "location.long": coordinates_long}
+        };
+        const options = {upsert: false, new: true};
+
+        ChatStatus.findOneAndUpdate(query, update, options, (err, cs) => {
+          if (err){
+            console.log('Error 위치저장못', err);
+          } else if (cs){
             var productAskMessage = "감사합니다, 찾고자 하는 제품명을 입력해주세요!";
             var productAskPayload = {
             "text": productAskMessage
             };
             sendTextMessage(senderId, productAskPayload);
+          }
+        });
+
+
+/*
+        connection.query(
+            'SELECT (lng-'+String(coordinates.long)+')*(lng-'+String(coordinates.long)+')+(lat-'+String(coordinates.lat)+')*(lat-'+String(coordinates.lat)+') as distance, lng, lat, id from stores1.convenient_stores201809_final order by distance asc limit 50;',
+            function(err, results, fields){
+                console.log(fields);
+                console.log(results);
         }
       )
+*/
+
+
+
     // 시작하기
     }else if(content && content.includes("시작")){
       var greetingMessage = "누물보에 처음 오셨나요?";
@@ -231,9 +261,9 @@ function productSearchMessage(recipientId, productName){
           resultItem = results;
           for(var i=0; i<resultItem.length; i++){
             tempElements[i].title = resultItem[i].item_name;
-            tempElements[i].image_url = "https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2018/11/Untitled-design-1-2-796x417.png";
+            tempElements[i].image_url = resultItem[i].img_src;
             tempElements[i].buttons[0].title = resultItem[i].item_name;
-            tempElements[i].buttons[0].payload = TEMP;
+            tempElements[i].buttons[0].payload = CVSinfo;
             response.attachment.payload.elements.push(tempElements[i]);
           };
           sendTextMessage(recipientId, response);
@@ -278,10 +308,10 @@ function receivedPostback(sender_psid, received_postback) {
     }
       sendTextMessage(senderID, noPayload);
       break;
-    case TEMP:
-      var TEMPMESSAGE = "ㅇㅋ";
-      var TEMPPAYLOAD = {
-        "text": TEMPMESSAGE
+    case CVSinfo:
+      var CVSinfoPMESSAGE = "찾으시는 상품의 재고가 있는 매점은 다음과 같습니다.";
+      var CVSinfoPAYLOAD = {
+        "text": CVSinfoPMESSAGE
     }
       sendTextMessage(senderID, TEMPPAYLOAD);
       break;
