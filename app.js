@@ -190,6 +190,7 @@ function productSearchMessage(recipientId, productName){
         //tempElement.image_url =
         tempElement.buttons[0].title = resultItem[i].item_name;
         tempElement.buttons[0].payload = TEMP;
+        console.log(tempElement);
         response.attachment.payload.elements.push(tempElement);
       };
 
