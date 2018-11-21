@@ -158,8 +158,7 @@ function productSearchMessage(recipientId, productName){
       var tempElement = {
         "buttons": [
               {
-                type: "postback",
-                payload: PREF_CLEANUP
+                type: "postback"
               }
             ]
       };
