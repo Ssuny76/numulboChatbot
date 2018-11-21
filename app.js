@@ -151,7 +151,7 @@ function productSearchMessage(recipientId, productName){
             console.log("SQL문제업구");
             //console.log(fields);
             console.log(results);
-            console.log(results[0][0].category);
+            console.log(results[0].category);
 
          }
 
