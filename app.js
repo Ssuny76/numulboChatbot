@@ -148,9 +148,7 @@ function productSearchMessage(recipientId, productName){
       connection.query(
         sqlquery,
         function(err, results, fields){
-            if (err) {
-                  throw err;
-            }
+            console.log(err);
             console.log("SQL문제업구");
             console.log(fields);
             console.log(results);
