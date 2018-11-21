@@ -143,53 +143,16 @@ function receivedMessage(event) {
 
 function productSearchMessage(recipientId, productName){
      var sqlquery = 'select *, (score/char_length(item_name)) as accuracy from (select *, if((instr(item_name, "불"))=0, 0, 1)+if((instr(item_name, "닭"))=0, 0, 1)+if((instr(item_name, "볶"))=0, 0, 1)+if((instr(item_name, "음"))=0, 0, 1)+if((instr(item_name, "면"))=0, 0, 1) as score from stores1.item_table) as A order by score desc, accuracy desc limit 4;';
-    console.log(sqlquery);
+    var resultItem = [];
+
       connection.query(
         sqlquery,
         function(err, results, fields){
-            console.log(err);
-            console.log("SQL문제업구");
-            //console.log(fields);
-            console.log(results);
-            console.log(results[0].category);
-
+            //console.log(results);
+            //console.log(results[0].category);
+            resultItem = results.slice();
          }
-
     );
-    
-
-
-      var realElement =       {
-          "title": "Environmental Cleanup",
-          "image_url": "http://www.wwf.org.au/Images/UserUploadedImages/416/img-bait-reef-coral-bleaching-rubble-1000px.jpg",
-          "buttons": [
-            {
-              type: "postback",
-              title: "Go Environmental Cleanup",
-              payload: TEMP
-            }
-          ]
-    };
-
-    var anotherElement = {
-          "title": "Revegetation",
-          "image_url": "http://www.wwf.org.au//Images/UserUploadedImages/416/img-planet-globe-on-moss-forest-1000px.jpg",
-          "buttons": [
-            {
-              type: "postback",
-              title: "Go Revegetation",
-              payload: TEMP
-            }
-          ]
-        };
-/*
-      response.attachment.payload.elements[0] = [];
-      for(var i=0; i<results.length(); i++){
-        response.attachment.payload.elements[0][i].title = 제품명
-        response.attachment.payload.elements[0][i].image_url =
-
-      }
-*/
 
       var response = {
         "attachment": {
@@ -202,12 +165,9 @@ function productSearchMessage(recipientId, productName){
         }
       };
 
-
-
-      response.attachment.payload.elements.push(realElement);
-      response.attachment.payload.elements.push(anotherElement);
-      console.log(response.attachment.payload.elements[0]);
-      console.log(response.attachment.payload.elements[1]);
+      for(var i=0; i<resultItem.length(); i++){
+        response.attachment.payload.elements.push(resultItem[i]);
+      }
 
      sendTextMessage(recipientId, response);
      return;
