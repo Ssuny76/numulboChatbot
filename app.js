@@ -229,7 +229,7 @@ function productSearchMessage(recipientId, productName){
           console.log(resultItem.length);
           for(var i=0; i<resultItem.length; i++){
             tempElements[i].title = resultItem[i].item_name;
-            tempElements[i].image_url = "https://pixabay.com/photo-2736410/";
+            tempElements[i].buttons[0].image_url = "https://pixabay.com/photo-2736410/";
             tempElements[i].buttons[0].title = resultItem[i].item_name;
             tempElements[i].buttons[0].payload = TEMP;
             response.attachment.payload.elements.push(tempElements[i]);
