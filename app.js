@@ -162,7 +162,11 @@ function productSearchMessage(recipientId, productName){
       
       getInformationFromDB(function (err, resultItem) {
         if(err) console.log("DB Error");
-        else console.log("resultItem"+resultItem);
+        else {
+          console.log("resultItem"+resultItem);
+          console.log(resultItem[0]);
+
+        }
       });
 
       var tempElement = {
@@ -184,10 +188,10 @@ function productSearchMessage(recipientId, productName){
         }
       };
 
-      console.log(resultItem[0]);
       console.log(resultItem.length);
+      console.log(Object.keys(resultItem).length);
 
-      for(var i=0; i<resultItem.length; i++){
+      for(var i=0; i<Object.keys(resultItem).length; i++){
         tempElement.title = resultItem[i].item_name;
         tempElement.image_url = "https://pixabay.com/photo-2736410/";
         tempElement.buttons[0].title = resultItem[i].item_name;
