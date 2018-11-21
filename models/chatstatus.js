@@ -6,9 +6,7 @@ var ChatStatusSchema = new Schema({
   location: {
     lat: Number,
     long: Number
-  },
-  preference: String,
-  status: String
+  }
 });
 
 module.exports = mongoose.model("ChatStatus", ChatStatusSchema);
