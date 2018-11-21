@@ -162,7 +162,7 @@ function productSearchMessage(recipientId, productName){
       
       getInformationFromDB(function (err, resultItem) {
         if(err) console.log("DB Error");
-        else console.log(resultItem);
+        else console.log("resultItem"+resultItem);
       });
 
       var tempElement = {
@@ -184,6 +184,7 @@ function productSearchMessage(recipientId, productName){
         }
       };
 
+      console.log(typeof resultItem);
       console.log(resultItem.length);
 
       for(var i=0; i<resultItem.length; i++){
