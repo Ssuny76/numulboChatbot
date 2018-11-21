@@ -145,25 +145,7 @@ function productSearchMessage(recipientId, productName){
     var sqlquery = 'select *, (score/char_length(item_name)) as accuracy from (select *, if((instr(item_name, "불"))=0, 0, 1)+if((instr(item_name, "닭"))=0, 0, 1)+if((instr(item_name, "볶"))=0, 0, 1)+if((instr(item_name, "음"))=0, 0, 1)+if((instr(item_name, "면"))=0, 0, 1) as score from stores1.item_table) as A order by score desc, accuracy desc limit 4;';
     var resultItem = [];
 
-    var getInformationFromDB = function(callback) {
-       connection.query(
-        sqlquery,
-        function(err, results, fields){
-          if(err) throw err;
-          callback(results);
-
-        }
-     );
-     };
-
-      getInformationFromDB(function (results) {
-          resultItem = results;
-          console.log(resultItem[0]);
-          console.log(resultItem.length);
-        }
-      );
-
-      var tempElement = {
+    var tempElement = {
         "buttons": [
               {
                 type: "postback"
@@ -182,18 +164,34 @@ function productSearchMessage(recipientId, productName){
         }
       };
 
-      
+    var getInformationFromDB = function(callback) {
+       connection.query(
+        sqlquery,
+        function(err, results, fields){
+          if(err) throw err;
+          callback(results);
 
-      for(var i=0; i<resultItem.length; i++){
-        tempElement.title = resultItem[i].item_name;
-        tempElement.image_url = "https://pixabay.com/photo-2736410/";
-        tempElement.buttons[0].title = resultItem[i].item_name;
-        tempElement.buttons[0].payload = TEMP;
-        console.log(tempElement);
-        response.attachment.payload.elements.push(tempElement);
-      };
+        }
+     );
+     };
 
-     sendTextMessage(recipientId, response);
+      getInformationFromDB(function (results) {
+          resultItem = results;
+          console.log(resultItem[0]);
+          console.log(resultItem.length);
+          for(var i=0; i<resultItem.length; i++){
+          tempElement.title = resultItem[i].item_name;
+          tempElement.image_url = "https://pixabay.com/photo-2736410/";
+          tempElement.buttons[0].title = resultItem[i].item_name;
+          tempElement.buttons[0].payload = TEMP;
+          console.log(tempElement);
+          response.attachment.payload.elements.push(tempElement);
+          sendTextMessage(recipientId, response);
+        };
+        }
+      );
+
+     
      return;
 
 }
