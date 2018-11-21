@@ -163,7 +163,7 @@ function productSearchMessage(recipientId, productName){
       getInformationFromDB(function (err, result) {
         if(err) console.log("DB Error");
         else console.log(resultItem);
-      }
+      });
 
       var tempElement = {
         "buttons": [
