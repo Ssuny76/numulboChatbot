@@ -77,7 +77,7 @@ app.post("/webhook", function(req, res) {
                         console.log("message를 인식은함");
                         receivedMessage(messagingEvent);
                       }else{
-                        console.log("메신저의 메시지");
+                        console.log("메신저의 메시");
                       }
                     }
                 }else if (messagingEvent.postback) {
@@ -160,6 +160,8 @@ function productSearchMessage(recipientId, productName){
     }
     sqlquery += input_char[input_char.length-1]+'))=0, 0, 1) as score from stores1.item_table) as A order by score desc, accuracy desc limit 4;'
 
+    console.log(sqlquery);
+    
     var resultItem = [];
 
     var tempElement1 = {
