@@ -72,9 +72,13 @@ app.post("/webhook", function(req, res) {
                     if (messagingEvent.message.quick_reply){
                       console.log("quick_reply를 인식함");
                       receivedPostback(messagingEvent.sender.id, messagingEvent.message.quick_reply);
-                    } else{
-                    console.log("message를 인식은함");
-                      receivedMessage(messagingEvent);
+                    } else {
+                      if(messagingEvent.sender.id!=349086052585964){
+                        console.log("message를 인식은함");
+                        receivedMessage(messagingEvent);
+                      }else{
+                        console.log("메신저의 메시지");
+                      }
                     }
                 }else if (messagingEvent.postback) {
                     console.log("postback으로 인식중");
