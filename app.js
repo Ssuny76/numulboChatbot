@@ -165,7 +165,7 @@ function productSearchMessage(recipientId, productName){
         }
       };
 
-      for(var i=0; i<resultItem.length(); i++){
+      for(var i=0; i<resultItem.length; i++){
         response.attachment.payload.elements.push(resultItem[i]);
       }
 
