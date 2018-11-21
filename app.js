@@ -184,6 +184,7 @@ function productSearchMessage(recipientId, productName){
         }
       };
 
+      console.log(resultItem.length);
 
       for(var i=0; i<resultItem.length; i++){
         tempElement.title = resultItem[i].item_name;
