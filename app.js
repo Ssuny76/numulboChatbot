@@ -180,14 +180,14 @@ function productSearchMessage(recipientId, productName){
           console.log(resultItem[0]);
           console.log(resultItem.length);
           for(var i=0; i<resultItem.length; i++){
-          tempElement.title = resultItem[i].item_name;
-          tempElement.image_url = "https://pixabay.com/photo-2736410/";
-          tempElement.buttons[0].title = resultItem[i].item_name;
-          tempElement.buttons[0].payload = TEMP;
-          console.log(tempElement);
-          response.attachment.payload.elements.push(tempElement);
+            tempElement.title = resultItem[i].item_name;
+            tempElement.image_url = "https://pixabay.com/photo-2736410/";
+            tempElement.buttons[0].title = resultItem[i].item_name;
+            tempElement.buttons[0].payload = TEMP;
+            console.log(tempElement);
+            response.attachment.payload.elements.push(tempElement);
+          };
           sendTextMessage(recipientId, response);
-        };
         }
       );
 
