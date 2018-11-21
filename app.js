@@ -5,14 +5,17 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 
+const MONGODB_URI = process.env.MONGODB_URI;
+const mongoose = require('mongoose');
+var db = mongoose.connect(MONGODB_URI);
+var ChatStatus = require("./models/chatstatus");
+
 const greeting = 'GREETING';
 const START_SEARCH_NO = 'START_SEARCH_NO';
 const START_SEARCH_YES = 'START_SEARCH_YES';
 const CVSinfo = 'CVSinfo';
 
 const mysql = require('mysql2');
-
-var ChatStatus = require("./models/chatstatus");
 
 const connection = mysql.createConnection({
     host:"mysql.cm8nmhebfeax.ap-northeast-2.rds.amazonaws.com",
