@@ -149,8 +149,10 @@ function productSearchMessage(recipientId, productName){
         function(err, results, fields){
             console.log(err);
             console.log("SQL문제업구");
-            console.log(fields);
+            //console.log(fields);
             console.log(results);
+            console.log(results[0][0].category);
+
          }
 
     );
