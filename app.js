@@ -153,6 +153,16 @@ function productSearchMessage(recipientId, productName){
             resultItem = results.slice();
          }
     );
+      console.log(resultItem);
+
+      var tempElement = {
+        "buttons": [
+              {
+                type: "postback",
+                payload: PREF_CLEANUP
+              }
+            ]
+      };
 
       var response = {
         "attachment": {
@@ -165,9 +175,14 @@ function productSearchMessage(recipientId, productName){
         }
       };
 
+
       for(var i=0; i<resultItem.length; i++){
-        response.attachment.payload.elements.push(resultItem[i]);
-      }
+        tempElement.title = resultItem[i].item_name;
+        //tempElement.image_url =
+        tempElement.buttons[0].title = resultItem[i].item_name;
+        tempElement.buttons[0].payload = TEMP;
+        response.attachment.payload.elements.push(tempElement);
+      };
 
      sendTextMessage(recipientId, response);
      return;
