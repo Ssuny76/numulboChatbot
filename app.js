@@ -156,14 +156,14 @@ function productSearchMessage(recipientId, productName){
      };
       
       getInformationFromDB(function (results) {
-        else {
+        
           resultItem = results;
           var resultLength= results.length;
           //console.log("resultItem"+resultItem);
           console.log(resultItem[0]);
 
         }
-      });
+      );
 
       var tempElement = {
         "buttons": [
