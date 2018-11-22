@@ -136,7 +136,7 @@ function receivedMessage(event) {
         };
         sendTextMessage(senderId, productAskPayload);
     // 시작하기
-    }else if(content && (event.message.sticker_id||content.includes("시작")){
+    }else if(content && (event.message.sticker_id||content.includes("시작"))){
       var greetingMessage = "누물보에 처음 오셨나요?";
       var greetingPayload = {
         "text": greetingMessage,
