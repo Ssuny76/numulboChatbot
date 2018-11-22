@@ -375,7 +375,7 @@ function cvsSearchMessage(recipientId, productName){
                         "title": "지도에서 열기",
                         "type": "postback",
                         "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121",
-                        "payload": "Help"    
+                        "payload": Help  
                       }
                     ]
                   },
@@ -388,7 +388,7 @@ function cvsSearchMessage(recipientId, productName){
                         "title": "지도에서 열기",
                         "type": "postback",
                         "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121",
-                        "payload": "Help"   
+                        "payload": Help     
                       }
                     ]
                   },
@@ -401,7 +401,7 @@ function cvsSearchMessage(recipientId, productName){
                         "title": "지도에서 열기",
                         "type": "postback",
                         "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121",
-                        "payload": "Help"      
+                        "payload": Help     
                       }
                     ]
                   }
