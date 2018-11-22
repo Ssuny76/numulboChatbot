@@ -115,9 +115,7 @@ function receivedMessage(event) {
     const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
     if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
         
-
-        
-        var locationSQL = 'INSERT INTO stores1.userData(userId, lat, long, time)VALUES(?,?,?,?);';
+        var locationSQL = 'INSERT INTO stores1.userData(user_id, lat, lng, time)VALUES(?,?,?,?);';
         connection.query(locationSQL, [senderId , coordinates.lat, coordinates.long, event.timestamp], function (err, data) {
             if (err) {
                 console.log("sql에 저장하지 못했다고합니다..");
@@ -410,7 +408,7 @@ function receivedPostback(sender_psid, received_postback) {
 // 선택한 제품명을 userData에 추가하려고 함.
 // 
 
-
+/*
       var productSave = 'UPDATE stores1.userData SET product = '+selectedName+'WHERE userId ='+senderID+' AND userId = temp.userId FROM temp as SELECT userID, max(stores1.userData.timestamp) FROM stores1.userData;';
       connection.query(productSave, [senderId , content], function (err, data) {
           if (err) {
@@ -418,7 +416,7 @@ function receivedPostback(sender_psid, received_postback) {
           } else {
               console.log("sql에 들어갔당");
           }
-      });
+      });*/
 
       // 편의점 찾는 함수로 연결
       cvsSearchMessage(sender_psid, selectedName)
