@@ -16,6 +16,7 @@ const greeting = 'GREETING';
 const START_SEARCH_NO = 'START_SEARCH_NO';
 const START_SEARCH_YES = 'START_SEARCH_YES';
 const CVSinfo = 'CVSinfo';
+const Help = 'Help';
 
 const mysql = require('mysql2');
 
