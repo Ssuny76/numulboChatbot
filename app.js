@@ -340,7 +340,7 @@ function cvsSearchMessage(recipientId, productName){
 
             if(tempResult[i].cs_name.includes("cu")||tempResult[i].cs_name.includes("씨유")){
               cvsList[i].image_url = cuImg;
-            }else if(tempResult[i].cs_name.includes("gs")||tempResult[i].cs_name.includes("지에스")){
+            }else if(tempResult[i].cs_name.includes("gs")||tempResult[i].cs_name.includes("GS")){
               cvsList[i].image_url = gs25Img;
             }else if(tempResult[i].cs_name.includes("emart")||tempResult[i].cs_name.includes("이마트")){
               cvsList[i].image_url = emart24Img;
@@ -356,10 +356,11 @@ function cvsSearchMessage(recipientId, productName){
             cvsList[i].buttons[0].payload = Help;
             cvsList[i].buttons[0].url = cvsURL;
             cvsResponse.attachment.payload.elements.push(cvsList[i]);
+            sendTextMessage(recipientId, cvsResponse);
           };
           console.log(cvsResponse);
-          console.log(cvsResponse.attachment.payload.elements[0]);
-          sendTextMessage(recipientId, cvsResponse);
+          console.log(cvsResponse.attachment.payload.elements);
+          //sendTextMessage(recipientId, cvsResponse);
         }
       );
      return;
@@ -414,9 +415,6 @@ function receivedPostback(sender_psid, received_postback) {
             var thisUserRecent = results;
             var recentLat = thisUserRecent[0].lat;
             var recentLng = thisUserRecent[0].lng;
-
-
-            //time은 음.. 나중엥
             var QUERY2 = 'INSERT INTO stores1.user_data(user_id, lat, lng, item_name) VALUES(?,?,?,?);'
             connection.query(QUERY2, [senderID , recentLat, recentLng,selectedName], function (err, data) {
               if (err) {
