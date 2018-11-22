@@ -303,7 +303,7 @@ function cvsSearchMessage(recipientId, productName){
       cvsList.push(cvs4);
 
 
-/*
+
       var cvsResponse = {
         "attachment": {
           "type": "template",
@@ -313,7 +313,7 @@ function cvsSearchMessage(recipientId, productName){
             "elements":[]
           }
         }
-      };*/
+      };
 
     var cvsDB = function(callback) {
        connection.query(
@@ -337,9 +337,6 @@ function cvsSearchMessage(recipientId, productName){
             console.log("FOR문에 들어왔음");
             var cvsURL = 'https://www.google.com/maps?q='+String(tempResult[i].lat)+','+String(tempResult[i].lng);
             cvsList[i].title = tempResult[i].cs_name+" "+tempResult[i].cs_branch;
-            cvsList[i].subtitle = "임시ㅋ부제임"; 
-
-
             if(tempResult[i].cs_name.includes("cu")||tempResult[i].cs_name.includes("CU")){
               cvsList[i].image_url = cuImg;
             }else if(tempResult[i].cs_name.includes("gs")||tempResult[i].cs_name.includes("GS")){
@@ -355,72 +352,10 @@ function cvsSearchMessage(recipientId, productName){
             }
 
             cvsList[i].buttons[0].title = "지도에서 열기";
-            cvsList[i].buttons[0].payload = Help;
+            cvsList[i].buttons[0].type = web_url;
             cvsList[i].buttons[0].url = cvsURL;
-            //cvsResponse.attachment.payload.elements.push(cvsList[i]);
-
-            var cvsResponse = {
-             "attachment": {
-              "type": "template",
-              "payload": {
-                "template_type": "list",
-                "top_element_style": "compact",
-                "elements": [
-                  {
-                    "title": "GS25 신림미림점",
-                    "subtitle": "임시ㅋ부제임",
-                    "image_url": "http://img.wemep.co.kr/deal/7/521/2445217/9e9b234d572e260e9f38d6fc3131da3bb2b5b40c.jpg",          
-                    "buttons": [
-                      {
-                        "title": "지도에서 열기",
-                        "type": "web_url",
-                        "messenger_extensions": true,
-                         "webview_height_ratio": "tall",
-                         "fallback_url": "https://www.google.com/maps", 
-                        "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121",
-                        "payload": Help  
-                      }
-                    ]
-                  },
-                  {
-                    "title": "미니스톱 신림주공점",
-                    "subtitle": "임시ㅋ부제임",
-                    "image_url": "http://img.wemep.co.kr/deal/7/521/2445217/9e9b234d572e260e9f38d6fc3131da3bb2b5b40c.jpg",          
-                    "buttons": [
-                      {
-                        "title": "지도에서 열기",
-                        "type": "web_url",
-                        "messenger_extensions": true,
-                        "webview_height_ratio": "tall",
-                        "fallback_url": "https://www.google.com/maps",
-                        "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121",
-                        "payload": Help     
-                      }
-                    ]
-                  },
-                  {
-                    "title": "CU 관악고시촌점",
-                    "subtitle": "임시ㅋ부제임",
-                    "image_url": "http://img.wemep.co.kr/deal/7/521/2445217/9e9b234d572e260e9f38d6fc3131da3bb2b5b40c.jpg",          
-                    "buttons": [
-                      {
-                        "title": "지도에서 열기",
-                        "type": "web_url",
-                        "messenger_extensions": true,
-                        "webview_height_ratio": "tall",
-                         "fallback_url": "https://www.google.com/maps" ,
-                        "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121",
-                        "payload": Help     
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-            };
-            
-          }; // for문 괄호
-          console.log(cvsResponse);
+            cvsResponse.attachment.payload.elements.push(cvsList[i]);
+          };
           console.log(cvsResponse.attachment.payload.elements);
           sendTextMessage(recipientId, cvsResponse);
 
