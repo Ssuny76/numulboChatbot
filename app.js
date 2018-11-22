@@ -359,13 +359,12 @@ function cvsSearchMessage(recipientId, productName){
             cvsList[i].buttons[0].url = cvsURL;
             //cvsResponse.attachment.payload.elements.push(cvsList[i]);
 
-
             var cvsResponse = {
              "attachment": {
               "type": "template",
               "payload": {
                 "template_type": "list",
-                "top_element_style": "compact",
+                "top_element_style": "large",
                 "elements": [
                   {
                     "title": "GS25 신림미림점",
@@ -376,8 +375,7 @@ function cvsSearchMessage(recipientId, productName){
                         "title": "지도에서 열기",
                         "type": "postback",
                         "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121",
-                        "payload": "Help",
-                        "messenger_extensions": true        
+                        "payload": "Help"    
                       }
                     ]
                   },
@@ -390,8 +388,7 @@ function cvsSearchMessage(recipientId, productName){
                         "title": "지도에서 열기",
                         "type": "postback",
                         "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121",
-                        "payload": "Help",
-                        "messenger_extensions": true        
+                        "payload": "Help"   
                       }
                     ]
                   },
@@ -404,8 +401,7 @@ function cvsSearchMessage(recipientId, productName){
                         "title": "지도에서 열기",
                         "type": "postback",
                         "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121",
-                        "payload": "Help",
-                        "messenger_extensions": true        
+                        "payload": "Help"      
                       }
                     ]
                   }
@@ -413,6 +409,7 @@ function cvsSearchMessage(recipientId, productName){
               }
             }
             };
+            
           } // for문 괄호
           console.log(cvsResponse);
           console.log(cvsResponse.attachment.payload.elements);
