@@ -373,7 +373,8 @@ function cvsSearchMessage(recipientId, productName){
                     "buttons": [
                       {
                         "title": "지도에서 열기",
-                        "type": "postback",
+                        "type": "web_url",
+                        "messenger_extensions": true,
                         "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121",
                         "payload": Help  
                       }
@@ -386,7 +387,8 @@ function cvsSearchMessage(recipientId, productName){
                     "buttons": [
                       {
                         "title": "지도에서 열기",
-                        "type": "postback",
+                        "type": "web_url",
+                        "messenger_extensions": true,
                         "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121",
                         "payload": Help     
                       }
@@ -399,7 +401,8 @@ function cvsSearchMessage(recipientId, productName){
                     "buttons": [
                       {
                         "title": "지도에서 열기",
-                        "type": "postback",
+                        "type": "web_url",
+                        "messenger_extensions": true,
                         "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121",
                         "payload": Help     
                       }
