@@ -343,7 +343,7 @@ function cvsSearchMessage(recipientId, productName){
             }else{
               cvsList[i].image_url = defaultImg;
             }
-            
+
             cvsList[i].buttons[0].title = "지도에서 열기";
             cvsList[i].buttons[0].payload = CVSinfo;
             cvsList[i].buttons[0].url = cvsURL;
@@ -413,12 +413,11 @@ function receivedPostback(sender_psid, received_postback) {
                   console.log("제품이름 못드러감");
               } else {
                   console.log("제품이름까지도 모조리 들어갔다..");
+                  cvsSearchMessage(sender_psid, selectedName);
               }
-        });
-
+            });
         }
       );
-      cvsSearchMessage(sender_psid, selectedName)
       break;
     case Help:
     break;
