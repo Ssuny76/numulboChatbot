@@ -352,7 +352,7 @@ function cvsSearchMessage(recipientId, productName){
             }
 
             cvsList[i].buttons[0].title = "지도에서 열기";
-            cvsList[i].buttons[0].type = web_url;
+            cvsList[i].buttons[0].type = "web_url";
             cvsList[i].buttons[0].url = cvsURL;
             cvsResponse.attachment.payload.elements.push(cvsList[i]);
           };
