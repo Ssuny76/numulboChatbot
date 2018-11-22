@@ -102,14 +102,6 @@ app.post("/webhook", function(req, res) {
     }
 });
 
-
-
-
-
-
-
-
-
 function receivedMessage(event) {
     var senderId = event.sender.id;
     var content = event.message.text;
@@ -175,7 +167,9 @@ function productSearchMessage(recipientId, productName){
     for (var i=0; i<input_char.length-1; i++){
       sqlquery += input_char[i]+'"))=0, 0, 1)+if((instr(item_name, "';
     }
-    sqlquery += input_char[input_char.length-1]+'"))=0, 0, 1) as score from stores1.item_table) as A order by score desc, accuracy desc limit 4;'
+    sqlquery += input_char[input_char.length-1]+'"))=0, 0, 1)+if((instr(item_name, "';
+    sqlquery += input_char+'"))=0, 0, "';
+    sqlquery += String(input_char.length)+'")as score from stores1.item_table) as A order by score desc, accuracy desc limit 4;'
 
     console.log(sqlquery);
 
@@ -242,6 +236,7 @@ function productSearchMessage(recipientId, productName){
 
       getInformationFromDB(function (results) {
           resultItem = results;
+          console.log(results);
           for(var i=0; i<resultItem.length; i++){
             tempElements[i].title = resultItem[i].item_name;
             tempElements[i].image_url = resultItem[i].img_src;
