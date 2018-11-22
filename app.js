@@ -324,7 +324,7 @@ function receivedPostback(sender_psid, received_postback) {
 
             //time은 음.. 나중엥
             var QUERY2 = 'INSERT INTO stores1.user_data(user_id, lat, lng, item_name) VALUES(?,?,?,?);'
-            connection.query(QUERY2, [senderId , recentLat, recentLng,selectedName], function (err, data) {
+            connection.query(QUERY2, [senderID , recentLat, recentLng,selectedName], function (err, data) {
               if (err) {
                   console.log("제품이름 못드러감");
               } else {
