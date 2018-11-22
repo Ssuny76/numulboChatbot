@@ -118,7 +118,7 @@ function receivedMessage(event) {
 
         /*
         var locationSQL = 'INSERT INTO stores1.userData(userId, lat, long, time)VALUES(?,?,?,?);';
-        connection.query(locationSQL, [senderId , coordinates.lat, coordinates.long, event.message.timestamp], function (err, data) {
+        connection.query(locationSQL, [senderId , coordinates.lat, coordinates.long, event.timestamp], function (err, data) {
             if (err) {
                 console.log("sql에 저장하지 못했다고합니다..");
             } else {
@@ -127,7 +127,7 @@ function receivedMessage(event) {
         });
         */
 
-        console.log("timestamp looks like - "+event.message.timestamp);
+        console.log("timestamp looks like - "+event.timestamp);
 
 
         var productAskMessage = "감사합니다, 찾고자 하는 제품명을 입력해주세요!";
@@ -135,28 +135,6 @@ function receivedMessage(event) {
         "text": productAskMessage
         };
         sendTextMessage(senderId, productAskPayload);
-/*
-        const query = {$and: [
-          { 'user_id': senderId }
-        ]};
-        const update = {
-          $set: { "location.lat": coordinates.lat, "location.long": coordinates.long}
-        };
-        const options = {upsert: false, new: true};
-
-        ChatStatus.findOneAndUpdate(query, update, options, (err, cs) => {
-          if (err){
-            console.log('Error 위치저장못', err);
-          } else if (cs){
-            var productAskMessage = "감사합니다, 찾고자 하는 제품명을 입력해주세요!";
-            var productAskPayload = {
-            "text": productAskMessage
-            };
-            sendTextMessage(senderId, productAskPayload);
-          }
-        });
-*/
-
 
         connection.query(
             'SELECT (lng-'+String(coordinates.long)+')*(lng-'+String(coordinates.long)+')+(lat-'+String(coordinates.lat)+')*(lat-'+String(coordinates.lat)+') as distance, lng, lat, id from stores1.convenient_stores201809_final order by distance asc limit 50;',
@@ -197,6 +175,8 @@ function receivedMessage(event) {
 
 
 function productSearchMessage(recipientId, productName){
+
+
 
 
 
@@ -334,8 +314,10 @@ function receivedPostback(sender_psid, received_postback) {
       var CVSinfoPAYLOAD = {
         "text": CVSinfoPMESSAGE
     }
-      sendTextMessage(senderID, TEMPPAYLOAD);
+      sendTextMessage(senderID, CVSinfoPAYLOAD);
       break;
+    case Help:
+    break;
     default:
       console.log('Cannot differentiate the payload type');
   }
