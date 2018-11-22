@@ -364,7 +364,7 @@ function cvsSearchMessage(recipientId, productName){
               "type": "template",
               "payload": {
                 "template_type": "list",
-                "top_element_style": "large",
+                "top_element_style": "compact",
                 "elements": [
                   {
                     "title": "GS25 신림미림점",
