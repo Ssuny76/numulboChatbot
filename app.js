@@ -328,8 +328,12 @@ function cvsSearchMessage(recipientId, productName){
       cvsDB(function (results) {
             console.log("cvsSearchMessage의 깊숙이..");
             console.log(results);
-           tempResult = results;
+
+            tempResult = results;
+            console.log(tempResult.length);
+           
           for(var i=0; i<tempResult.length; i++){
+            console.log("FOR문에 들어왔음");
             var cvsURL = 'https://www.google.com/maps?q='+String(tempResult[i].lat)+','+String(tempResult[i].lng);
             cvsList[i].title = tempResult[i].cs_name+" "+tempResult[i].cs_branch;
 
@@ -348,7 +352,7 @@ function cvsSearchMessage(recipientId, productName){
             }
 
             cvsList[i].buttons[0].title = "지도에서 열기";
-            cvsList[i].buttons[0].payload = CVSinfo;
+            cvsList[i].buttons[0].payload = Help;
             cvsList[i].buttons[0].url = cvsURL;
             cvsResponse.attachment.payload.elements.push(cvsList[i]);
           };
@@ -423,6 +427,11 @@ function receivedPostback(sender_psid, received_postback) {
       );
       break;
     case Help:
+      var helpMessage = "도움이 되셨나요?";
+      var helpPayload = {
+        "text": helpMessage
+    }
+      sendTextMessage(senderID, helpPayload);
     break;
     default:
       console.log('Cannot differentiate the payload type');
