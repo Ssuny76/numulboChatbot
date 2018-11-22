@@ -337,6 +337,8 @@ function cvsSearchMessage(recipientId, productName){
             console.log("FOR문에 들어왔음");
             var cvsURL = 'https://www.google.com/maps?q='+String(tempResult[i].lat)+','+String(tempResult[i].lng);
             cvsList[i].title = tempResult[i].cs_name+" "+tempResult[i].cs_branch;
+            cvsList[i].subtitle = "임시ㅋ부제임"; 
+
 
             if(tempResult[i].cs_name.includes("cu")||tempResult[i].cs_name.includes("씨유")){
               cvsList[i].image_url = cuImg;
