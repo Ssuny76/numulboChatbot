@@ -413,7 +413,11 @@ function cvsSearchMessage(recipientId, productName){
           }; // for문 괄호
           console.log(cvsResponse);
           console.log(cvsResponse.attachment.payload.elements);
-          sendTextMessage(recipientId, cvsResponse);
+          if (error) {
+            console.log('Error sending message: ' + response.error);
+          }else{
+            sendTextMessage(recipientId, cvsResponse);
+          }
         }
       );
      return;
