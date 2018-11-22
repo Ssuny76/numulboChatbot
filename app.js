@@ -304,6 +304,8 @@ function cvsSearchMessage(recipientId, productName){
       cvsList.push(cvs3);
       cvsList.push(cvs4);
 
+
+/*
       var cvsResponse = {
         "attachment": {
           "type": "template",
@@ -313,7 +315,7 @@ function cvsSearchMessage(recipientId, productName){
             "elements":[]
           }
         }
-      };
+      };*/
 
     var cvsDB = function(callback) {
        connection.query(
@@ -340,7 +342,7 @@ function cvsSearchMessage(recipientId, productName){
             cvsList[i].subtitle = "임시ㅋ부제임"; 
 
 
-            if(tempResult[i].cs_name.includes("cu")||tempResult[i].cs_name.includes("씨유")){
+            if(tempResult[i].cs_name.includes("cu")||tempResult[i].cs_name.includes("CU")){
               cvsList[i].image_url = cuImg;
             }else if(tempResult[i].cs_name.includes("gs")||tempResult[i].cs_name.includes("GS")){
               cvsList[i].image_url = gs25Img;
@@ -357,7 +359,61 @@ function cvsSearchMessage(recipientId, productName){
             cvsList[i].buttons[0].title = "지도에서 열기";
             cvsList[i].buttons[0].payload = Help;
             cvsList[i].buttons[0].url = cvsURL;
-            cvsResponse.attachment.payload.elements.push(cvsList[i]);
+            //cvsResponse.attachment.payload.elements.push(cvsList[i]);
+
+
+            var cvsResponse = {
+
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "list",
+        "top_element_style": "compact",
+        "elements": [
+          {
+            "title": "GS25 신림미림점",
+            "subtitle": "임시ㅋ부제임",
+            "image_url": "http://img.wemep.co.kr/deal/7/521/2445217/9e9b234d572e260e9f38d6fc3131da3bb2b5b40c.jpg",          
+            "buttons": [
+              {
+                "title": "지도에서 열기",
+                "type": "postback",
+                "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121"
+                //"messenger_extensions": true        
+              }
+            ]
+          },
+          {
+            "title": "미니스톱 신림주공점",
+            "subtitle": "임시ㅋ부제임",
+            "image_url": "http://img.wemep.co.kr/deal/7/521/2445217/9e9b234d572e260e9f38d6fc3131da3bb2b5b40c.jpg",          
+            "buttons": [
+              {
+                "title": "지도에서 열기",
+                "type": "postback",
+                "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121"
+                //"messenger_extensions": true        
+              }
+            ]
+          },
+          {
+            "title": "CU 관악고시촌점",
+            "subtitle": "임시ㅋ부제임",
+            "image_url": "http://img.wemep.co.kr/deal/7/521/2445217/9e9b234d572e260e9f38d6fc3131da3bb2b5b40c.jpg",          
+            "buttons": [
+              {
+                "title": "지도에서 열기",
+                "type": "postback",
+                "url": "https://www.google.com/maps?q=37.4655663983432,126.931652019121"
+                //"messenger_extensions": true        
+              }
+            ]
+          }
+        ]
+      }
+    }
+};
+
             sendTextMessage(recipientId, cvsResponse);
           };
           console.log(cvsResponse);
