@@ -113,6 +113,7 @@ app.post("/webhook", function(req, res) {
 function receivedMessage(event) {
     var senderId = event.sender.id;
     var content = event.message.text;
+    var sticker = event && event.message.sticker_id;
     //var echo_message = "ECHO : " + content;
 
      // check if it is a location message
@@ -136,7 +137,7 @@ function receivedMessage(event) {
         };
         sendTextMessage(senderId, productAskPayload);
     // 시작하기
-    }else if(content && (event.message.sticker_id||content.includes("시작"))){
+    }else if(content && (sticker||content.includes("시작"))){
       var greetingMessage = "누물보에 처음 오셨나요?";
       var greetingPayload = {
         "text": greetingMessage,
