@@ -261,8 +261,6 @@ function productSearchMessage(recipientId, productName){
 
 
 function cvsSearchMessage(recipientId, productName){
-    console.log("cvsSearchMessage들어왔음");
-      
     var cvsquery = 'select ((stores1.convenient_stores201809_final.lng - user_data_a.lng) * (stores1.convenient_stores201809_final.lng - user_data_a.lng) + (stores1.convenient_stores201809_final.lat - user_data_a.lat) + (stores1.convenient_stores201809_final.lat - user_data_a.lat)) as distance, stores1.convenient_stores201809_final.lng, stores1.convenient_stores201809_final.lat, stores1.convenient_stores201809_final.cs_name, stores1.convenient_stores201809_final.cs_branch from stores1.convenient_stores201809_final, stores1.item_stock, (select * from stores1.user_data where user_id like "'+String(recipientId)+ '"order by time desc limit 1) as user_data_a, stores1.item_table where user_data_a.user_id like "'+String(recipientId)+ '"and user_data_a.item_name like stores1.item_table.item_name and stores1.item_table.item_id = stores1.item_stock.item_id and stores1.item_stock.cs_id = stores1.convenient_stores201809_final.cs_id and stores1.item_stock.amount > 0 order by distance asc limit 3;';
     var tempResult = [];
 
@@ -415,13 +413,10 @@ function cvsSearchMessage(recipientId, productName){
               }
             }
             };
-
-            sendTextMessage(recipientId, cvsResponse);
-          };
+          } // for문 괄호
           console.log(cvsResponse);
           console.log(cvsResponse.attachment.payload.elements);
-          console.log(cvsResponse.attachment.payload.elements[0].buttons[0]);
-          //sendTextMessage(recipientId, cvsResponse);
+          sendTextMessage(recipientId, cvsResponse);
         }
       );
      return;
