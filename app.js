@@ -114,6 +114,22 @@ function receivedMessage(event) {
     const locationAttachment = event && event.message.attachments && event.message.attachments.find(a => a.type === 'location');
     const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
     if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
+        
+
+        /*
+        var locationSQL = 'INSERT INTO stores1.userData(userId, lat, long, time)VALUES(?,?,?,?);';
+        connection.query(locationSQL, [senderId , coordinates.lat, coordinates.long, event.message.timestamp], function (err, data) {
+            if (err) {
+                console.log("sql에 저장하지 못했다고합니다..");
+            } else {
+                console.log("sql에 들어갔당");
+            }
+        });
+        */
+
+        console.log("timestamp looks like - "+event.message.timestamp);
+
+
         var productAskMessage = "감사합니다, 찾고자 하는 제품명을 입력해주세요!";
         var productAskPayload = {
         "text": productAskMessage
@@ -141,7 +157,7 @@ function receivedMessage(event) {
         });
 */
 
-/*
+
         connection.query(
             'SELECT (lng-'+String(coordinates.long)+')*(lng-'+String(coordinates.long)+')+(lat-'+String(coordinates.lat)+')*(lat-'+String(coordinates.lat)+') as distance, lng, lat, id from stores1.convenient_stores201809_final order by distance asc limit 50;',
             function(err, results, fields){
@@ -149,7 +165,7 @@ function receivedMessage(event) {
                 console.log(results);
         }
       )
-*/
+
 
 
 
