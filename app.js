@@ -5,6 +5,11 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 
+const cuImg = "http://cu.bgfretail.com/images/facebook.jpg";
+const gs25Img = "http://img.wemep.co.kr/deal/7/521/2445217/9e9b234d572e260e9f38d6fc3131da3bb2b5b40c.jpg";
+const emart24Img = "https://pds.joins.com/news/component/htmlphoto_mmdata/201709/18/htm_20170918164238563309.jpg";
+const ministopImg = "https://www.bworldonline.com/wp-content/uploads/2018/09/ministop-logo.jpg";
+
 var ChatStatus = require("./models/chatstatus");
 
 const greeting = 'GREETING';
@@ -123,24 +128,12 @@ function receivedMessage(event) {
                 console.log("sql에 들어갔당");
             }
         });
-        
-
-        console.log("timestamp looks like - "+event.timestamp);
-
 
         var productAskMessage = "감사합니다, 찾고자 하는 제품명을 입력해주세요!";
         var productAskPayload = {
         "text": productAskMessage
         };
         sendTextMessage(senderId, productAskPayload);
-
-        connection.query(
-            'SELECT (lng-'+String(coordinates.long)+')*(lng-'+String(coordinates.long)+')+(lat-'+String(coordinates.lat)+')*(lat-'+String(coordinates.lat)+') as distance, lng, lat, id from stores1.convenient_stores201809_final order by distance asc limit 50;',
-            function(err, results, fields){
-                console.log(fields);
-                console.log(results);
-        }
-      )
 
 
 
@@ -173,26 +166,11 @@ function receivedMessage(event) {
 
 
 function productSearchMessage(recipientId, productName){
-  // 님들 이거 아이템 하나 딱 뜰때 list처리해줘야함
 
-    var input_array = productName.split(' ');
-    console.log(input_array);
-    var input_concat = productName.replace(' ','');
-    console.log(input_concat);
-    var input_char = input_concat.split('');
-    console.log(input_char);
+    var cvsquery = '';
+    var tempResult;
 
-    var sqlquery = 'select *, (score/char_length(item_name)) as accuracy from (select *, if((instr(item_name, "';
-    for (var i=0; i<input_char.length-1; i++){
-      sqlquery += input_char[i]+'"))=0, 0, 1)+if((instr(item_name, "';
-    }
-    sqlquery += input_char[input_char.length-1]+'"))=0, 0, 1) as score from stores1.item_table) as A order by score desc, accuracy desc limit 4;'
-
-    console.log(sqlquery);
-
-    var resultItem = [];
-
-    var tempElement1 = {
+    var cvs1 = {
         "buttons": [
               {
                 type: "postback"
@@ -200,7 +178,7 @@ function productSearchMessage(recipientId, productName){
             ]
       };
 
-      var tempElement2 = {
+      var cvs2 = {
         "buttons": [
               {
                 type: "postback"
@@ -208,7 +186,7 @@ function productSearchMessage(recipientId, productName){
             ]
       };
 
-      var tempElement3 = {
+      var cvs3 = {
         "buttons": [
               {
                 type: "postback"
@@ -216,7 +194,7 @@ function productSearchMessage(recipientId, productName){
             ]
       };
 
-      var tempElement4 = {
+      var cvs4 = {
         "buttons": [
               {
                 type: "postback"
@@ -224,11 +202,12 @@ function productSearchMessage(recipientId, productName){
             ]
       };
 
-      var tempElements = [];
-      tempElements.push(tempElement1);
-      tempElements.push(tempElement2);
-      tempElements.push(tempElement3);
-      tempElements.push(tempElement4);
+      var cvsList = [];
+      cvsList.push(cvs1);
+      cvsList.push(cvs2);
+      cvsList.push(cvs3);
+      cvsList.push(cvs4);
+
       var response = {
         "attachment": {
           "type": "template",
@@ -240,9 +219,9 @@ function productSearchMessage(recipientId, productName){
         }
       };
 
-    var getInformationFromDB = function(callback) {
+    var cvsDB = function(callback) {
        connection.query(
-        sqlquery,
+        cvsquery,
         function(err, results, fields){
           if(err) throw err;
           callback(results);
@@ -251,14 +230,17 @@ function productSearchMessage(recipientId, productName){
      );
      };
 
-      getInformationFromDB(function (results) {
-          resultItem = results;
-          for(var i=0; i<resultItem.length; i++){
-            tempElements[i].title = resultItem[i].item_name;
-            tempElements[i].image_url = resultItem[i].img_src;
-            tempElements[i].buttons[0].title = resultItem[i].item_name;
-            tempElements[i].buttons[0].payload = CVSinfo;
-            response.attachment.payload.elements.push(tempElements[i]);
+      cvsDB(function (results) {
+           tempResult = results;
+          for(var i=0; i<tempResult.length; i++){
+            var cvsURL = 'https://www.google.com/maps?q='+String(tempResult[i].lat)+','+String(tempResult[i].lng);
+            cvsList[i].title = tempResult[i].cs_name+" "+tempResult[i].cs_branch;
+            cvsList[i].image_url = tempResult[i].cvsURL;
+
+            cvsList[i].buttons[0].title = "지도에서 열기";
+            cvsList[i].buttons[0].payload = CVSinfo;
+            cvsList[i].buttons[0].url = cvsURL;
+            response.attachment.payload.elements.push(cvsList[i]);
           };
           sendTextMessage(recipientId, response);
         }
@@ -267,7 +249,85 @@ function productSearchMessage(recipientId, productName){
 }
 
 function cvsSearchMessage(recipientId, productName){
+      
+    var cvsquery = '';
+    var tempResult;
 
+    var cvs1 = {
+        "buttons": [
+              {
+                type: "postback"
+              }
+            ]
+      };
+
+      var cvs2 = {
+        "buttons": [
+              {
+                type: "postback"
+              }
+            ]
+      };
+
+      var cvs3 = {
+        "buttons": [
+              {
+                type: "postback"
+              }
+            ]
+      };
+
+      var cvs4 = {
+        "buttons": [
+              {
+                type: "postback"
+              }
+            ]
+      };
+
+      var cvsList = [];
+      cvsList.push(cvs1);
+      cvsList.push(cvs2);
+      cvsList.push(cvs3);
+      cvsList.push(cvs4);
+
+      var response = {
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "list",
+            "top_element_style": "compact",
+            "elements":[]
+          }
+        }
+      };
+
+    var cvsDB = function(callback) {
+       connection.query(
+        cvsquery,
+        function(err, results, fields){
+          if(err) throw err;
+          callback(results);
+
+        }
+     );
+     };
+
+      cvsDB(function (results) {
+           tempResult = results;
+          for(var i=0; i<tempResult.length; i++){
+            var cvsURL = 'https://www.google.com/maps?q='+String(tempResult[i].lat)+','+String(tempResult[i].lng);
+            cvsList[i].title = tempResult[i].cs_name+" "+tempResult[i].cs_branch;
+            cvsList[i].image_url = tempResult[i].cvsURL;
+
+            cvsList[i].buttons[0].title = "지도에서 열기";
+            cvsList[i].buttons[0].payload = CVSinfo;
+            cvsList[i].buttons[0].url = cvsURL;
+            response.attachment.payload.elements.push(cvsList[i]);
+          };
+          sendTextMessage(recipientId, response);
+        }
+      );
      return;
 }
 
@@ -334,9 +394,7 @@ function receivedPostback(sender_psid, received_postback) {
 
         }
       );
-
-      // 편의점 찾는 함수로 연결
-      // cvsSearchMessage(sender_psid, selectedName)
+      cvsSearchMessage(sender_psid, selectedName)
       break;
     case Help:
     break;
