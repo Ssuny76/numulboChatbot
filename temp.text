@@ -1,40 +1,58 @@
-// 4만개짜리
-// 중복 제거
-// 재고 랜덤 리스트
-// 중복 제거한 편의점(위치데이터)-재고데이터 매칭
-
-// 50개까지만 출력한 상태
-
-
-//  제품명 - (띄어쓰기 삭제 후 검색) - (없으면?) - (띄어쓰기 있는 상태로 분리된 낱말들 각각 검색) - 
-
-// 불 닭 볶 음면
-
-
-불닭 까르보나라
-불닭 ㅇㅁㅇ 2
-치즈 볶음면 3
-송이 볶음면 3
-짜장 볶음면 3
-
-불닭 볶음면 5
-불닭 까르 볶음면 5
-불닭 삼양 볶음면 5
-
-여기서 TOP 3  (3개 이상이면 다 출력)
-
 찾으시는게 여기 있나여
 없으면 다시 치셈
 
 
 
 
+var productSQL= INSERT INTO stores1.userData(userId, lat, long, time)VALUES(
+	senderId
+	coordinates.lat // 
+	coordinates.long // 
+	event.timestamp
+
+?,?,?,?)
+	
+
+	
+;';
+connection.query(productSQL, [results], function (err, data) {
+            if (err) {
+                console.log("sql에 저장하지 못했다고합니다..");
+            } else {
+                console.log("sql에 들어갔당");
+            }
+        }); 
 
 
 
 
+// 유저 ID 들어와, 
 
 
+// 유지 ID, lat, long , timestamp
+// 
+
+
+
+var QUERY1 = SELECT * WHERE userId(테이블) = userID(자바스크립트) ORDER BY DESC timestamp(테이블)
+
+var QUERY2 = insert into table values (userID, recentLat, recentLOong, productSave) 
+
+    var DEALwithQUERY1 = function(callback) {
+       connection.query(
+        QUERY1,
+        function(err, results, fields){
+          if(err) throw err;
+          callback(results);
+        }
+     };
+
+      DEALwithQUERY1(function (results) {
+          thisUserRecent = results;
+            var recentLat = thisUserRecent[0].lat;
+            var recentLong = thisUserRecent[0].long;
+        }
+      );
 
 
 
