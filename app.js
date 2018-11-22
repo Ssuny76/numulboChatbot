@@ -317,7 +317,7 @@ function receivedPostback(sender_psid, received_postback) {
         }
       )};
       DEALwithQUERY1(function(results) {
-            thisUserRecent = results;
+            var thisUserRecent = results;
             var recentLat = thisUserRecent[0].lat;
             var recentLng = thisUserRecent[0].lng;
 
