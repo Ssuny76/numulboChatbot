@@ -358,6 +358,7 @@ function cvsSearchMessage(recipientId, productName){
             cvsResponse.attachment.payload.elements.push(cvsList[i]);
           };
           console.log(cvsResponse);
+          console.log(cvsResponse.attachment.payload.elements[0]);
           sendTextMessage(recipientId, cvsResponse);
         }
       );
