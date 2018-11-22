@@ -315,7 +315,7 @@ function receivedPostback(sender_psid, received_postback) {
           if(err) throw err;
           callback(results);
         }
-     };
+      )};
       DEALwithQUERY1(function(results) {
             thisUserRecent = results;
             var recentLat = thisUserRecent[0].lat;
