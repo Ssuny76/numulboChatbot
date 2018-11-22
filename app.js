@@ -163,11 +163,11 @@ function productSearchMessage(recipientId, productName){
     var input_char = input_concat.split('');
     console.log(input_char);
 
-    var sqlquery = 'select *, (score/char_length(item_name)) as accuracy from (select *, if((instr(item_name, "';
+    var sqlquery = 'select *, (score/char_length(item_name)) as accuracy from (select *, if((instr(concat(category,item_name), "';
     for (var i=0; i<input_char.length-1; i++){
-      sqlquery += input_char[i]+'"))=0, 0, 1)+if((instr(item_name, "';
+      sqlquery += input_char[i]+'"))=0, 0, 1)+if((instr(concat(category,item_name), "';
     }
-    sqlquery += input_char[input_char.length-1]+'"))=0, 0, 1)+if((instr(item_name, "';
+    sqlquery += input_char[input_char.length-1]+'"))=0, 0, 1)+if((instr(concat(category,item_name), "';
     sqlquery += input_char+'"))=0, 0, "';
     sqlquery += String(input_char.length)+'")as score from stores1.item_table) as A order by score desc, accuracy desc limit 4;'
 
