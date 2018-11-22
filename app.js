@@ -9,8 +9,8 @@ const cuImg = "http://cu.bgfretail.com/images/facebook.jpg";
 const gs25Img = "http://img.wemep.co.kr/deal/7/521/2445217/9e9b234d572e260e9f38d6fc3131da3bb2b5b40c.jpg";
 const emart24Img = "https://pds.joins.com/news/component/htmlphoto_mmdata/201709/18/htm_20170918164238563309.jpg";
 const ministopImg = "https://www.bworldonline.com/wp-content/uploads/2018/09/ministop-logo.jpg";
-
-var ChatStatus = require("./models/chatstatus");
+const seven11Img = "https://cdn.nashvillepost.com/files/base/scomm/nvp/image/2017/11/1x1/640w/282715_10150304196888255_7461934_n.5a134ca8c3f4f.jpg";
+const defaultImg = "http://www.bishnoiagro.com/Bish@dmin/assets/img/no-logo.jpg";
 
 const greeting = 'GREETING';
 const START_SEARCH_NO = 'START_SEARCH_NO';
@@ -166,11 +166,24 @@ function receivedMessage(event) {
 
 
 function productSearchMessage(recipientId, productName){
+    var input_array = productName.split(' ');
+    console.log(input_array);
+    var input_concat = productName.replace(' ','');
+    console.log(input_concat);
+    var input_char = input_concat.split('');
+    console.log(input_char);
 
-    var cvsquery = '';
-    var tempResult;
+    var sqlquery = 'select *, (score/char_length(item_name)) as accuracy from (select *, if((instr(item_name, "';
+    for (var i=0; i<input_char.length-1; i++){
+      sqlquery += input_char[i]+'"))=0, 0, 1)+if((instr(item_name, "';
+    }
+    sqlquery += input_char[input_char.length-1]+'"))=0, 0, 1) as score from stores1.item_table) as A order by score desc, accuracy desc limit 4;'
 
-    var cvs1 = {
+    console.log(sqlquery);
+
+    var resultItem = [];
+
+    var tempElement1 = {
         "buttons": [
               {
                 type: "postback"
@@ -178,7 +191,7 @@ function productSearchMessage(recipientId, productName){
             ]
       };
 
-      var cvs2 = {
+      var tempElement2 = {
         "buttons": [
               {
                 type: "postback"
@@ -186,7 +199,7 @@ function productSearchMessage(recipientId, productName){
             ]
       };
 
-      var cvs3 = {
+      var tempElement3 = {
         "buttons": [
               {
                 type: "postback"
@@ -194,7 +207,7 @@ function productSearchMessage(recipientId, productName){
             ]
       };
 
-      var cvs4 = {
+      var tempElement4 = {
         "buttons": [
               {
                 type: "postback"
@@ -202,12 +215,11 @@ function productSearchMessage(recipientId, productName){
             ]
       };
 
-      var cvsList = [];
-      cvsList.push(cvs1);
-      cvsList.push(cvs2);
-      cvsList.push(cvs3);
-      cvsList.push(cvs4);
-
+      var tempElements = [];
+      tempElements.push(tempElement1);
+      tempElements.push(tempElement2);
+      tempElements.push(tempElement3);
+      tempElements.push(tempElement4);
       var response = {
         "attachment": {
           "type": "template",
@@ -219,9 +231,9 @@ function productSearchMessage(recipientId, productName){
         }
       };
 
-    var cvsDB = function(callback) {
+    var getInformationFromDB = function(callback) {
        connection.query(
-        cvsquery,
+        sqlquery,
         function(err, results, fields){
           if(err) throw err;
           callback(results);
@@ -230,17 +242,14 @@ function productSearchMessage(recipientId, productName){
      );
      };
 
-      cvsDB(function (results) {
-           tempResult = results;
-          for(var i=0; i<tempResult.length; i++){
-            var cvsURL = 'https://www.google.com/maps?q='+String(tempResult[i].lat)+','+String(tempResult[i].lng);
-            cvsList[i].title = tempResult[i].cs_name+" "+tempResult[i].cs_branch;
-            cvsList[i].image_url = tempResult[i].cvsURL;
-
-            cvsList[i].buttons[0].title = "지도에서 열기";
-            cvsList[i].buttons[0].payload = CVSinfo;
-            cvsList[i].buttons[0].url = cvsURL;
-            response.attachment.payload.elements.push(cvsList[i]);
+      getInformationFromDB(function (results) {
+          resultItem = results;
+          for(var i=0; i<resultItem.length; i++){
+            tempElements[i].title = resultItem[i].item_name;
+            tempElements[i].image_url = resultItem[i].img_src;
+            tempElements[i].buttons[0].title = resultItem[i].item_name;
+            tempElements[i].buttons[0].payload = CVSinfo;
+            response.attachment.payload.elements.push(tempElements[i]);
           };
           sendTextMessage(recipientId, response);
         }
@@ -248,10 +257,12 @@ function productSearchMessage(recipientId, productName){
      return;
 }
 
+
+
 function cvsSearchMessage(recipientId, productName){
       
-    var cvsquery = '';
-    var tempResult;
+    var cvsquery = 'select ((stores1.convenient_stores201809_final.lng - user_data_a.lng) * (stores1.convenient_stores201809_final.lng - user_data_a.lng) + (stores1.convenient_stores201809_final.lat - user_data_a.lat) + (stores1.convenient_stores201809_final.lat - user_data_a.lat)) as distance, stores1.convenient_stores201809_final.lng, stores1.convenient_stores201809_final.lat, stores1.convenient_stores201809_final.cs_name, stores1.convenient_stores201809_final.cs_branch from stores1.convenient_stores201809_final, stores1.item_stock, (select * from stores1.user_data where user_id like "'+String(recipientId)+ '"order by time desc limit 1) as user_data_a, stores1.item_table where user_data_a.user_id like "'+String(recipientId)+ '"and user_data_a.item_name like stores1.item_table.item_name and stores1.item_table.item_id = stores1.item_stock.item_id and stores1.item_stock.cs_id = stores1.convenient_stores201809_final.cs_id and stores1.item_stock.amount > 0 order by distance asc limit 3;';
+    var tempResult = [];
 
     var cvs1 = {
         "buttons": [
@@ -291,7 +302,7 @@ function cvsSearchMessage(recipientId, productName){
       cvsList.push(cvs3);
       cvsList.push(cvs4);
 
-      var response = {
+      var cvsResponse = {
         "attachment": {
           "type": "template",
           "payload": {
@@ -318,14 +329,27 @@ function cvsSearchMessage(recipientId, productName){
           for(var i=0; i<tempResult.length; i++){
             var cvsURL = 'https://www.google.com/maps?q='+String(tempResult[i].lat)+','+String(tempResult[i].lng);
             cvsList[i].title = tempResult[i].cs_name+" "+tempResult[i].cs_branch;
-            cvsList[i].image_url = tempResult[i].cvsURL;
 
+            if(tempResult[i].cs_name.includes("cu")||tempResult[i].cs_name.includes("씨유")){
+              cvsList[i].image_url = cuImg;
+            }else if(tempResult[i].cs_name.includes("gs")||tempResult[i].cs_name.includes("지에스")){
+              cvsList[i].image_url = gs25Img;
+            }else if(tempResult[i].cs_name.includes("emart")||tempResult[i].cs_name.includes("이마트")){
+              cvsList[i].image_url = emart24Img;
+            }else if(tempResult[i].cs_name.includes("mini")||tempResult[i].cs_name.includes("미니")){
+              cvsList[i].image_url = ministopImg;
+            }else if(tempResult[i].cs_name.includes("세븐")||tempResult[i].cs_name.includes("일레븐")){
+              cvsList[i].image_url = seven11Img;
+            }else{
+              cvsList[i].image_url = defaultImg;
+            }
+            
             cvsList[i].buttons[0].title = "지도에서 열기";
             cvsList[i].buttons[0].payload = CVSinfo;
             cvsList[i].buttons[0].url = cvsURL;
-            response.attachment.payload.elements.push(cvsList[i]);
+            cvsResponse.attachment.payload.elements.push(cvsList[i]);
           };
-          sendTextMessage(recipientId, response);
+          sendTextMessage(recipientId, cvsResponse);
         }
       );
      return;
