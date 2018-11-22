@@ -362,6 +362,7 @@ function cvsSearchMessage(recipientId, productName){
           };
           console.log(cvsResponse);
           console.log(cvsResponse.attachment.payload.elements);
+          console.log(cvsResponse.attachment.payload.elements[0].buttons[0]);
           //sendTextMessage(recipientId, cvsResponse);
         }
       );
