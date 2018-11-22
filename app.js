@@ -327,6 +327,7 @@ function cvsSearchMessage(recipientId, productName){
 
       cvsDB(function (results) {
             console.log("cvsSearchMessage의 깊숙이..");
+            console.log(results);
            tempResult = results;
           for(var i=0; i<tempResult.length; i++){
             var cvsURL = 'https://www.google.com/maps?q='+String(tempResult[i].lat)+','+String(tempResult[i].lng);
