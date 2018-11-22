@@ -410,7 +410,7 @@ function cvsSearchMessage(recipientId, productName){
             }
             };
             
-          } // for문 괄호
+          }; // for문 괄호
           console.log(cvsResponse);
           console.log(cvsResponse.attachment.payload.elements);
           sendTextMessage(recipientId, cvsResponse);
