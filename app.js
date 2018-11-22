@@ -413,15 +413,8 @@ function cvsSearchMessage(recipientId, productName){
           }; // for문 괄호
           console.log(cvsResponse);
           console.log(cvsResponse.attachment.payload.elements);
+          sendTextMessage(recipientId, cvsResponse);
 
-
-          function(error, response, body) {
-            if (error) {
-                console.log('Error sending message: ' + response.error);
-            }else{
-                sendTextMessage(recipientId, cvsResponse);
-           }
-          }
         }
       );
      return;
@@ -513,6 +506,8 @@ function sendTextMessage(recipientId, response) {
     }, function(error, response, body) {
         if (error) {
             console.log('Error sending message: ' + response.error);
+        }else{
+          console.log(response);
         }
     });
     return;
