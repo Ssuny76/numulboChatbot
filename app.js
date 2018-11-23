@@ -21,6 +21,8 @@ const Search = 'Search';
 const specificCVS = 'specificCVS';
 const ATM = 'ATM';
 const Lottery = 'Lottery';
+const Lotto = 'Lotto';
+const Toto = 'Toto';
 const PostOffice = 'PostOffice';
 
 // MySQL2
