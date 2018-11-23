@@ -470,7 +470,7 @@ function receivedPostback(sender_psid, received_postback) {
         var productAskPayload = {
         "text": productAskMessage
         };
-        sendTextMessage(senderId, productAskPayload);
+        sendTextMessage(senderID, productAskPayload);
     break;
     case specificCVS:
         var specificMessage = "다음 중 원하시는 서비스를 선택해주세요.";
@@ -502,7 +502,7 @@ function receivedPostback(sender_psid, received_postback) {
         var ATMPayload = {
         "text": ATMMessage
         };
-        sendTextMessage(senderId, ATMPayload);
+        sendTextMessage(senderID, ATMPayload);
     break;
     case Lotto:
         // QUERY 짜기
@@ -510,7 +510,7 @@ function receivedPostback(sender_psid, received_postback) {
         var LottoPayload = {
         "text": LottoMessage
         };
-        sendTextMessage(senderId, LottoPayload);
+        sendTextMessage(senderID, LottoPayload);
     break;
     case PostOffice:
         // QUERY 짜기
@@ -518,7 +518,7 @@ function receivedPostback(sender_psid, received_postback) {
         var PostOfficePayload = {
         "text": PostOfficeMessage
         };
-        sendTextMessage(senderId, PostOfficePayload);
+        sendTextMessage(senderID, PostOfficePayload);
     break;
     default:
       console.log('Cannot differentiate the payload type');
