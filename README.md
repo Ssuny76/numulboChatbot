@@ -23,3 +23,38 @@
 - 상품명 입력 후 오타를 잘 감지해 사용자가 원하는 제품을 출력하는 알고리즘 강화
 - emart24를 제외한 편의점의 실질적인 영업 시간 및 atm, 복권 판매 유무 데이터 
 - dummy data가 아닌 실제 편의점의 재고 데이터		
+
+
+## 개발 과정에서의 memo
+
+### 1) heroku
+정인
+
+### 2) AWS RDS
+형석
+
+### 3) node.js 설치
+정인
+
+### 4) 페이스북 페이지 생성 및 메신저 설정
+정인
+
+### 5) 편의점 위치 데이터 및 재고 데이터 생성
+
+### 5-1) 그..어디더라 사이트에서.. 가져와서 mysql에 가공해넣는부분
+형석
+### 5-2) CU 크롤링 (+이미지)
+서다
+
+### 6) app.js 함수 구현
+
+productSearchMessage
+cvsSearchMessage
+
+
+
+
+
+git add --a .
+git commit
+git push heroku master 
