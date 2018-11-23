@@ -508,12 +508,12 @@ function receivedPostback(sender_psid, received_postback) {
             var userLng = userRecent[0].lng;
             // 사용자 위치로부터 가장 가깝고 && ATM을 제공하는 편의점 지점 4개 보여주기
             var specificQuery2 = 'INSERT INTO stores1.user_data(user_id, lat, lng, item_name) VALUES(?,?,?,?);'
-            connection.query(specificQuery2, [senderID , userLat, userLng, selectedName], function (err, data) {
+            connection.query(specificQuery2, [senderID , userLat, userLng, payload], function (err, data) {
               if (err) {
                   console.log("서비스 제공 편의점 못드러감");
               } else {
                   console.log("서비스 제공 편의점 모조리 들어갔다..");
-                  cvsSearchMessage(sender_psid, selectedName);
+                  cvsSearchMessage(sender_psid, payload);
               }
             });
         }
