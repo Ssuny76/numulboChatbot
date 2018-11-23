@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 
+// Images used for list template buttons
 const cuImg = "http://cu.bgfretail.com/images/facebook.jpg";
 const gs25Img = "http://img.wemep.co.kr/deal/7/521/2445217/9e9b234d572e260e9f38d6fc3131da3bb2b5b40c.jpg";
 const emart24Img = "https://pds.joins.com/news/component/htmlphoto_mmdata/201709/18/htm_20170918164238563309.jpg";
@@ -12,7 +13,7 @@ const ministopImg = "https://www.bworldonline.com/wp-content/uploads/2018/09/min
 const seven11Img = "https://cdn.nashvillepost.com/files/base/scomm/nvp/image/2017/11/1x1/640w/282715_10150304196888255_7461934_n.5a134ca8c3f4f.jpg";
 const defaultImg = "http://www.bishnoiagro.com/Bish@dmin/assets/img/no-logo.jpg";
 
-const greeting = 'GREETING';
+// Payload names used in receivedPostback
 const START_SEARCH_NO = 'START_SEARCH_NO';
 const START_SEARCH_YES = 'START_SEARCH_YES';
 const CVSinfo = 'CVSinfo';
@@ -22,8 +23,8 @@ const ATM = 'ATM';
 const Lotto = 'Lotto';
 const PostOffice = 'PostOffice';
 
+// MySQL2
 const mysql = require('mysql2');
-
 const connection = mysql.createConnection({
     host:"mysql.cm8nmhebfeax.ap-northeast-2.rds.amazonaws.com",
     port:3306,
@@ -32,7 +33,6 @@ const connection = mysql.createConnection({
     password:"12341234",
     connectTimeout: 60000
 });
-
 connection.connect(function(err) {
   if (err) {
     console.error('error connecting: ', err);
@@ -40,18 +40,16 @@ connection.connect(function(err) {
   }
 });
 
-//이 토큰이 포함된 파일을 절대 업로드하거나 github에 적용시키지 마세요.
+// Facebook Page Access Token
 var PAGE_ACCESS_TOKEN = 'EAAd7X8SEqH8BAOrCQdZCTrgofOvhQnlW5jWyQf0Jb8EOjj2gdGZCbcZA38FnSPy3zFtXRSdLEG9xCUHVzyOVBoybndBMESi0rH3yfY2rmXRUOfexthFZBrRPDVZBZA0bBdtWUcpRgEPXeKWQ2iXeGsKEiCdBdsrDbNhzNfb8WASwZDZD';
 
 app.set('port', (process.env.PORT || 5000));
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
     res.send('Hello world');
 })
-
 
 app.get('/webhook', function(req, res) {
     if (req.query['hub.verify_token'] === 'VERIFY_TOKEN') {
@@ -72,8 +70,6 @@ app.post("/webhook", function(req, res) {
         data.entry.forEach(function(pageEntry) {
             var pageID = pageEntry.id;
             var timeOfEvent = pageEntry.time;
-
-
             var messagingEvent = pageEntry && pageEntry.messaging;
 
             // Iterate over each messaging event
@@ -110,7 +106,6 @@ function receivedMessage(event) {
     var senderId = event.sender.id;
     var content = event.message.text;
     var sticker = event && event.message.sticker_id;
-    //var echo_message = "ECHO : " + content;
 
      // check if it is a location message
     console.log('handleMEssage message:', JSON.stringify(event));
@@ -173,12 +168,12 @@ function receivedMessage(event) {
         "quick_replies":[
           {
             "content_type":"text",
-            "title":"Yes!",
+            "title":"네!",
             "payload": START_SEARCH_YES
           },
           {
             "content_type":"text",
-            "title":"No, thanks.",
+            "title":"아니오!",
             "payload": START_SEARCH_NO
           }
         ] 
@@ -200,11 +195,11 @@ function productSearchMessage(recipientId, productName){
     var input_char = input_concat.split('');
     console.log(input_char);
 
-    var sqlquery = 'select *, (score/char_length(item_name)) as accuracy from (select *, if((instr(concat(category,item_name), "';
+    var sqlquery = 'select *, (score/char_length(item_name)) as accuracy from (select *, if((instr(concat(category,category2,item_name), "';
     for (var i=0; i<input_char.length-1; i++){
-      sqlquery += input_char[i]+'"))=0, 0, 1)+if((instr(concat(category,item_name), "';
+      sqlquery += input_char[i]+'"))=0, 0, 1)+if((instr(concat(category,category2,item_name), "';
     }
-    sqlquery += input_char[input_char.length-1]+'"))=0, 0, 1)+if((instr(concat(category,item_name), "';
+    sqlquery += input_char[input_char.length-1]+'"))=0, 0, 1)+if((instr(concat(category,category2,item_name), "';
     sqlquery += input_char+'"))=0, 0, "';
     sqlquery += String(input_char.length)+'")as score from stores1.item_table) as A order by score desc, accuracy desc limit 4;'
 
@@ -408,6 +403,7 @@ function receivedPostback(sender_psid, received_postback) {
 
     // Get the payload for the postback
     const payload = received_postback.payload;
+    const selectedName = received_postback.title;  
 
     console.log("RECEIVED POSTBACK IT WORKS :" +payload);
     var senderID = sender_psid;
@@ -438,8 +434,6 @@ function receivedPostback(sender_psid, received_postback) {
       sendTextMessage(senderID, noPayload);
       break;
     case CVSinfo:
-      const selectedName = received_postback.title;  
-      
       var QUERY1 = 'SELECT * FROM stores1.temp_data WHERE user_id ="'+String(senderID)+'";';     
       var DEALwithQUERY1 = function(callback) {
        connection.query(
@@ -496,29 +490,32 @@ function receivedPostback(sender_psid, received_postback) {
       }
       sendTextMessage(senderID, specificPayload);
     break;
-    case ATM:
-        // QUERY 짜기
-        var ATMMessage = "쿼리나 짜라 이 노예들아!";
-        var ATMPayload = {
-        "text": ATMMessage
-        };
-        sendTextMessage(senderID, ATMPayload);
-    break;
-    case Lotto:
-        // QUERY 짜기
-        var LottoMessage = "쿼리나 짜라 이 노예들아!";
-        var LottoPayload = {
-        "text": LottoMessage
-        };
-        sendTextMessage(senderID, LottoPayload);
-    break;
-    case PostOffice:
-        // QUERY 짜기
-        var PostOfficeMessage = "쿼리나 짜라 이 노예들아!";
-        var PostOfficePayload = {
-        "text": PostOfficeMessage
-        };
-        sendTextMessage(senderID, PostOfficePayload);
+    case ATM, Lotto, PostOffice:
+      var specificQuery1 = 'SELECT * FROM stores1.temp_data WHERE user_id ="'+String(senderID)+'";';     
+      var DEALwithspecificQuery = function(callback) {
+       connection.query(
+        specificQuery1,
+        function(err, results, fields){
+          if(err) throw err;
+          callback(results);
+        }
+      )};
+      DEALwithspecificQuery(function(results) {
+            var userRecent = results;
+            var userLat = userRecent[0].lat;
+            var userLng = userRecent[0].lng;
+            // 사용자 위치로부터 가장 가깝고 && ATM을 제공하는 편의점 지점 4개 보여주기
+            var specificQuery2 = 'INSERT INTO stores1.user_data(user_id, lat, lng, item_name) VALUES(?,?,?,?);'
+            connection.query(specificQuery2, [senderID , userLat, userLng, selectedName], function (err, data) {
+              if (err) {
+                  console.log("서비스 제공 편의점 못드러감");
+              } else {
+                  console.log("서비스 제공 편의점 모조리 들어갔다..");
+                  cvsSearchMessage(sender_psid, selectedName);
+              }
+            });
+        }
+      );
     break;
     default:
       console.log('Cannot differentiate the payload type');
