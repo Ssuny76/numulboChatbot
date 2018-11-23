@@ -136,7 +136,7 @@ function receivedMessage(event) {
                 "elements": [
                   {
                     "title": "특정 상품을 찾으시나요?",
-                    "subtitle": "ex. 타이레놀, 생리대, 스크류바",
+                    "subtitle": "ex. 타이레놀, 생리대, 햇반",
                     "image_url": "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/magnifyingglass-512.png",          
                     "buttons": [
                       {
