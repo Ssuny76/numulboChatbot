@@ -113,14 +113,14 @@ function receivedMessage(event) {
     const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
     if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
         
-        var locationSQL = 'INSERT INTO stores1.temp_data(user_id, lat, lng) VALUES(?,?,?);';
-        connection.query(locationSQL, [senderId , coordinates.lat, coordinates.long], function (err, data) {
-            if (err) {
+        var locationSQL = 'UPDATE stores1.temp_data SET user_id ="'+String(senderId)+'", lat="'+String(coordinates.lat)+'", lng="'+String(coordinates.long)+'" WHERE user_id ="'+String(senderId)+'";';
+        connection.query(
+          locationSQL,
+          if (err) {
                 console.log("sql에 저장하지 못했다고합니다..");
             } else {
                 console.log("sql에 들어갔당");
-            }
-        });
+            });
 
         // 나중에 '영업시간' 데이터 제대로 받아오게 된다면 (지금은 일단 이마트24 빼고는 24시로 설정을..)
         // 사용자 현재시간에 영업중인 편의점을 보여주면 좋을듯
