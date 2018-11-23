@@ -19,7 +19,8 @@ const greeting = 'GREETING';
 const START_SEARCH_NO = 'START_SEARCH_NO';
 const START_SEARCH_YES = 'START_SEARCH_YES';
 const CVSinfo = 'CVSinfo';
-const Help = 'Help';
+const Search = 'Search';
+const specificCVS = 'specificCVS';
 
 const mysql = require('mysql2');
 
@@ -125,13 +126,6 @@ function receivedMessage(event) {
                 console.log("sql에 들어갔당");
             }
         });
-
-
-
-
-        // 여기서 list template으로 여러 기능을 제공하자
-        // 어떤 제품을 찾으시나요? (ex. 몽쉘카카오케이크)
-        // 
 
         // 나중에 '영업시간' 데이터 제대로 받아오게 된다면 (지금은 일단 이마트24 빼고는 24시로 설정을..)
         // 사용자 현재시간에 영업중인 편의점을 보여주면 좋을듯
