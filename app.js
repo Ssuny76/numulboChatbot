@@ -18,6 +18,9 @@ const START_SEARCH_YES = 'START_SEARCH_YES';
 const CVSinfo = 'CVSinfo';
 const Search = 'Search';
 const specificCVS = 'specificCVS';
+const ATM = 'ATM';
+const Lotto = 'Lotto';
+const PostOffice = 'PostOffice';
 
 const mysql = require('mysql2');
 
