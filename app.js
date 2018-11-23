@@ -473,7 +473,7 @@ function receivedPostback(sender_psid, received_postback) {
         sendTextMessage(senderId, productAskPayload);
     break;
     case specificCVS:
-        var specificMessage = "다음 중 ";
+        var specificMessage = "다음 중 원하시는 서비스를 선택해주세요.";
         var specificPayload = {
           "text": specificMessage,
           "quick_replies":[
@@ -484,7 +484,7 @@ function receivedPostback(sender_psid, received_postback) {
           },
           {
             "content_type":"text",
-            "title":"Lotto/스포츠토토",
+            "title":"Lotto/Toto",
             "payload": Lotto
           },
           {
@@ -494,7 +494,7 @@ function receivedPostback(sender_psid, received_postback) {
           }
         ] 
       }
-      sendTextMessage(senderID, yesPayload);
+      sendTextMessage(senderID, specificPayload);
     break;
     case ATM:
         // QUERY 짜기
