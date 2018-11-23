@@ -238,7 +238,12 @@ function productSearchMessage(recipientId, productName){
           resultItem = results;
           console.log(results);
           for(var i=0; i<resultItem.length; i++){
-            tempElements[i].title = resultItem[i].item_name;
+            if(resultItem[i].item_name.includes(")")){
+              var paranthesisIndex = resultItem[i].item_name.indexOf(")");
+              tempElements[i].title = resultItem[i].item_name.substring(paranthesisIndex+1,resultItem[i].item_name.length);
+            }else{
+              tempElements[i].title = resultItem[i].item_name;
+            }
             tempElements[i].image_url = resultItem[i].img_src;
             tempElements[i].buttons[0].title = resultItem[i].item_name;
             tempElements[i].buttons[0].payload = CVSinfo;
