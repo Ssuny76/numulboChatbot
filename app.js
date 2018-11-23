@@ -12,6 +12,9 @@ const ministopImg = "https://www.bworldonline.com/wp-content/uploads/2018/09/min
 const seven11Img = "https://cdn.nashvillepost.com/files/base/scomm/nvp/image/2017/11/1x1/640w/282715_10150304196888255_7461934_n.5a134ca8c3f4f.jpg";
 const defaultImg = "http://www.bishnoiagro.com/Bish@dmin/assets/img/no-logo.jpg";
 
+const searchImg = "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/magnifyingglass-512.png";
+const etcImg = './image/atmLottoETC.png';
+
 const greeting = 'GREETING';
 const START_SEARCH_NO = 'START_SEARCH_NO';
 const START_SEARCH_YES = 'START_SEARCH_YES';
@@ -123,11 +126,51 @@ function receivedMessage(event) {
             }
         });
 
-        var productAskMessage = "감사합니다, 찾고자 하는 제품명을 입력해주세요!";
-        var productAskPayload = {
-        "text": productAskMessage
-        };
-        sendTextMessage(senderId, productAskPayload);
+
+
+
+        // 여기서 list template으로 여러 기능을 제공하자
+        // 어떤 제품을 찾으시나요? (ex. 몽쉘카카오케이크)
+        // 
+
+        // 나중에 '영업시간' 데이터 제대로 받아오게 된다면 (지금은 일단 이마트24 빼고는 24시로 설정을..)
+        // 사용자 현재시간에 영업중인 편의점을 보여주면 좋을듯
+
+        var cvsResponse = {
+             "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "list",
+                "top_element_style": "compact",
+                "elements": [
+                  {
+                    "title": "특정 상품을 찾으시나요?",
+                    "subtitle": "ex. 타이레놀, 생리대, 스크류바",
+                    "image_url": searchImg,          
+                    "buttons": [
+                      {
+                        "title": "제품 찾기",
+                        "type": "postback",
+                        "payload": Search  
+                      }
+                    ]
+                  },
+                  {
+                    "title": "ATM, 복권, 택배 서비스 제공 지점을 찾으시나요?",
+                    "image_url": etcImg,          
+                    "buttons": [
+                      {
+                        "title": "지점 찾기",
+                        "type": "postback",
+                        "payload": specificCVS   
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+            };
+
     // 시작하기
     }else if(sticker||(content && content.includes("시작"))){
       var greetingMessage = "누물보에 처음 오셨나요?";
@@ -377,7 +420,7 @@ function receivedPostback(sender_psid, received_postback) {
 
     switch (payload){
     case START_SEARCH_YES:
-      var yesmessage = "누물보는 제품명을 입력해주시면, 재고가 있는지 알아드리는 어플입니다. 현재 위치를 알려주세요!";
+      var yesmessage = "누물보는 제품명을 입력해주시면, 재고가 있는지 알아드리는 어플입니다. 우선, 현재 위치를 알려주세요!";
       var yesPayload = {
         "text": yesmessage,
         "quick_replies":[
@@ -428,12 +471,19 @@ function receivedPostback(sender_psid, received_postback) {
         }
       );
       break;
-    case Help:
-      var helpMessage = "도움이 되셨나요?";
-      var helpPayload = {
-        "text": helpMessage
-    }
-      sendTextMessage(senderID, helpPayload);
+    case Search:
+        var productAskMessage = "감사합니다, 찾고자 하는 제품명을 입력해주세요!";
+        var productAskPayload = {
+        "text": productAskMessage
+        };
+        sendTextMessage(senderId, productAskPayload);
+    break;
+    case specificCVS:
+        var specificCVSMessage = "하하 쿼리 또 추가해줘야하지롱 하하하하 하하하하";
+        var specificCVSPayload = {
+        "text": productAskMessage
+        };
+        sendTextMessage(senderId, specificCVSPayload);
     break;
     default:
       console.log('Cannot differentiate the payload type');
