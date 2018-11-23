@@ -244,8 +244,9 @@ function productSearchMessage(recipientId, productName){
                 tempElements[i].title = resultItem[i].item_name;
               }else if(paranthesisIndex==resultItem[i].item_name.length){
                 tempElements[i].title = resultItem[i].item_name;
+              }else{
+                tempElements[i].title = resultItem[i].item_name.substring(paranthesisIndex+1,resultItem[i].item_name.length);
               }
-              tempElements[i].title = resultItem[i].item_name.substring(paranthesisIndex+1,resultItem[i].item_name.length);
             }else{
               tempElements[i].title = resultItem[i].item_name;
             }
