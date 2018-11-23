@@ -240,12 +240,17 @@ function productSearchMessage(recipientId, productName){
           for(var i=0; i<resultItem.length; i++){
             if(resultItem[i].item_name.includes(")")){
               var paranthesisIndex = resultItem[i].item_name.indexOf(")");
+              if(resultItem[i].item_name.includes("(")&&resultItem[i].item_name.indexOf("(")<paranthesisIndex){
+                tempElements[i].title = resultItem[i].item_name;
+              }else if(paranthesisIndex==resultItem[i].item_name.length){
+                tempElements[i].title = resultItem[i].item_name;
+              }
               tempElements[i].title = resultItem[i].item_name.substring(paranthesisIndex+1,resultItem[i].item_name.length);
             }else{
               tempElements[i].title = resultItem[i].item_name;
             }
             tempElements[i].image_url = resultItem[i].img_src;
-            tempElements[i].buttons[0].title = resultItem[i].item_name;
+            tempElements[i].buttons[0].title = tempElements[i].title;
             tempElements[i].buttons[0].payload = CVSinfo;
             response.attachment.payload.elements.push(tempElements[i]);
           };
