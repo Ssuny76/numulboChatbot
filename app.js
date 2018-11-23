@@ -164,7 +164,7 @@ function receivedMessage(event) {
               }
             }
             };
-    sendTextMessage(recipientId, responseAfterLocation);
+    sendTextMessage(senderId, responseAfterLocation);
     // 시작하기
     }else if(sticker||(content && content.includes("시작"))){
       var greetingMessage = "누물보에 처음 오셨나요?";
