@@ -12,9 +12,6 @@ const ministopImg = "https://www.bworldonline.com/wp-content/uploads/2018/09/min
 const seven11Img = "https://cdn.nashvillepost.com/files/base/scomm/nvp/image/2017/11/1x1/640w/282715_10150304196888255_7461934_n.5a134ca8c3f4f.jpg";
 const defaultImg = "http://www.bishnoiagro.com/Bish@dmin/assets/img/no-logo.jpg";
 
-const searchImg = "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/magnifyingglass-512.png";
-const etcImg = './image/atmLottoETC.png';
-
 const greeting = 'GREETING';
 const START_SEARCH_NO = 'START_SEARCH_NO';
 const START_SEARCH_YES = 'START_SEARCH_YES';
@@ -140,18 +137,18 @@ function receivedMessage(event) {
                   {
                     "title": "특정 상품을 찾으시나요?",
                     "subtitle": "ex. 타이레놀, 생리대, 스크류바",
-                    "image_url": searchImg,          
+                    "image_url": "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/magnifyingglass-512.png",          
                     "buttons": [
                       {
                         "title": "제품 찾기",
                         "type": "postback",
-                        "payload": Search  
+                        "payload": Search
                       }
                     ]
                   },
                   {
                     "title": "ATM, 복권, 택배 서비스 제공 지점을 찾으시나요?",
-                    "image_url": etcImg,          
+                    "image_url": "https://cdn4.iconfinder.com/data/icons/banking-and-finance/500/atm-cash-machine-512.png",          
                     "buttons": [
                       {
                         "title": "지점 찾기",
