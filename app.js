@@ -490,7 +490,9 @@ function receivedPostback(sender_psid, received_postback) {
       }
       sendTextMessage(senderID, specificPayload);
     break;
-    case ATM, Lotto, PostOffice:
+    case ATM:
+    case Lotto:
+    case PostOffice:
       var specificQuery1 = 'SELECT * FROM stores1.temp_data WHERE user_id ="'+String(senderID)+'";';     
       var DEALwithspecificQuery = function(callback) {
        connection.query(
