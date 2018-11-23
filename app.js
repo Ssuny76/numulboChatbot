@@ -130,7 +130,7 @@ function receivedMessage(event) {
         // 나중에 '영업시간' 데이터 제대로 받아오게 된다면 (지금은 일단 이마트24 빼고는 24시로 설정을..)
         // 사용자 현재시간에 영업중인 편의점을 보여주면 좋을듯
 
-        var cvsResponse = {
+        var responseAfterLocation = {
              "attachment": {
               "type": "template",
               "payload": {
@@ -164,7 +164,7 @@ function receivedMessage(event) {
               }
             }
             };
-
+    sendTextMessage(recipientId, responseAfterLocation);
     // 시작하기
     }else if(sticker||(content && content.includes("시작"))){
       var greetingMessage = "누물보에 처음 오셨나요?";
