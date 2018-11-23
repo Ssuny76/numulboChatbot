@@ -113,7 +113,7 @@ function receivedMessage(event) {
     const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
     if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
         var locationSQL1 = 'REPLACE INTO stores1.temp_data(user_id, lat, lng) VALUES(?,?,?);';
-            connection.query(locationSQL1, [senderID , coordinates.lat, coordinates.long], function (err, data) {
+            connection.query(locationSQL1, [senderId , coordinates.lat, coordinates.long], function (err, data) {
             if (err) {
                   console.log("sql에 저장하지 못했다고합니다..");
               } else {
