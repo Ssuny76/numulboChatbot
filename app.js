@@ -20,7 +20,7 @@ const CVSinfo = 'CVSinfo';
 const Search = 'Search';
 const specificCVS = 'specificCVS';
 const ATM = 'ATM';
-const Lotto = 'Lotto';
+const Lottery = 'Lottery';
 const PostOffice = 'PostOffice';
 
 // MySQL2
@@ -478,8 +478,8 @@ function receivedPostback(sender_psid, received_postback) {
           },
           {
             "content_type":"text",
-            "title":"Lotto/Toto",
-            "payload": Lotto
+            "title":"로또/토토",
+            "payload": Lottery
           },
           {
             "content_type":"text",
@@ -490,8 +490,27 @@ function receivedPostback(sender_psid, received_postback) {
       }
       sendTextMessage(senderID, specificPayload);
     break;
-    case ATM:
+    case Lottery:
+    var lotterymessage = "어떤 복권을 찾으시나요?";
+      var lotteryPayload = {
+        "text": lotterymessage,
+        "quick_replies":[
+          {
+            "content_type":"text",
+            "title":"로또",
+            "payload": Lotto
+          },
+          {
+            "content_type":"text",
+            "title":"스포츠토토",
+            "payload": Toto
+          }
+        ] 
+    }
+      sendTextMessage(senderID, lotteryPayload);
     case Lotto:
+    case Toto:
+    case ATM:
     case PostOffice:
       var specificQuery1 = 'SELECT * FROM stores1.temp_data WHERE user_id ="'+String(senderID)+'";';     
       var DEALwithspecificQuery = function(callback) {
