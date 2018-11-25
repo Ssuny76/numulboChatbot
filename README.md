@@ -152,9 +152,7 @@ user_data_a의 시간을 int로 변환한 값 hour(user_data_a.time)*100+minute(
 
 - distance를 기준으로 오름차순으로 정렬한 후 3개의 데이터 셋만 출력하기 위해 order by distance asc limit 3 이라는 정보를 씀
 
-- 결론 :
-select ((stores1.convenient_stores201809_final.lng - user_data_a.lng) * (stores1.convenient_stores201809_final.lng - user_data_a.lng) 
-+ (stores1.convenient_stores201809_final.lat - user_data_a.lat)*(stores1.convenient_stores201809_final.lat - user_data_a.lat)) 
+select ((stores1.convenient_stores201809_final.lng - user_data_a.lng) * (stores1.convenient_stores201809_final.lng - user_data_a.lng) + (stores1.convenient_stores201809_final.lat - user_data_a.lat)*(stores1.convenient_stores201809_final.lat - user_data_a.lat)) 
 as distance, stores1.convenient_stores201809_final.lng, stores1.convenient_stores201809_final.lat, 
 stores1.convenient_stores201809_final.cs_name, stores1.convenient_stores201809_final.cs_branch 
 from stores1.convenient_stores201809_final, stores1.item_stock, 
